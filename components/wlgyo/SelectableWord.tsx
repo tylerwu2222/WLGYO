@@ -26,7 +26,7 @@ const SelectableWord = ({
     }));
 
     useEffect(() => {
-        scale.value = withTiming(word === selectedWord ? 1 : 0, { duration: 500 });
+        scale.value = withTiming(word === selectedWord ? 1 : 0, { duration: 400 });
     }, [selectedWord]);
 
     const handlePress = (word: string) => {

@@ -41,7 +41,7 @@ export default function Index() {
       {/* buttons */}
       <View style={styles.menu}>
         {/* play button */}
-        <Link href='/wlgyo1' style={[styles.btn, styles.primaryBtn]} asChild>
+        <Link href='/wlgyoGame1' style={[styles.btn, styles.primaryBtn]} asChild>
           <TouchableOpacity>
             <Text style={[styles.btnText, styles.primaryBtnText]}>Play</Text>
           </TouchableOpacity>

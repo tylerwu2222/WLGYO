@@ -48,15 +48,9 @@ export default function RootLayout() {
                 presentation: 'modal',
                 headerShown: false
               }} />
-            <Stack.Screen
-              name="wlgyo1"
-              options={{
-                headerBackTitle: 'WLGYO',
-                headerTintColor: colorScheme === 'dark' ? 'white' : 'black',
-                title: ''
-              }}
-            />
-            <Stack.Screen name="wlgyo2" options={{ headerShown: false }} />
+            <Stack.Screen name="wlgyoGame1" options={{ headerShown: false }} />
+            <Stack.Screen name="wlgyoGame2" options={{ headerShown: false }} />
+            <Stack.Screen name="wlgyoPostGame" options={{ headerShown: false }} />
           </Stack>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>

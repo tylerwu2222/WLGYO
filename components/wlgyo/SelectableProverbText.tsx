@@ -24,11 +24,6 @@ const SelectableProverbText = ({
     const proverbList = proverb.split(' ');
 
     const scale = useSharedValue(0);
-    const animatedStyle = useAnimatedStyle(() => ({
-        transform: [{ scale: scale.value }],
-        opacity: scale.value,
-        backgroundColor: 'blue', // The fill color you want
-    }));
 
     const handlePress = (word: string) => {
         setSelectedWord(word);
@@ -41,7 +36,7 @@ const SelectableProverbText = ({
                     const isLastWord = index === proverbList.length - 1;
                     if (swapWordChoices.includes(word)) {
                         return (
-                            <Text>
+                            <Text key={word}>
                                 <SelectableWord
                                     word={word}
                                     selectedWord={selectedWord}

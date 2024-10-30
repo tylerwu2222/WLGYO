@@ -1,44 +1,56 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import ThemedTitleText from '@/components/ThemedTitleText';
 import { textColors, buttonColors } from '@/assets/consts/colors';
 import { Colors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import SelectableProverbText from '@/components/wlgyo/SelectableProverbText';
 
-
-const instructionsText = ''
-const game = () => {
+const wlgyoGame1 = () => {
 
     const router = useRouter();
 
     const colorScheme = useColorScheme();
     const backgroundColor = Colors[colorScheme ?? 'light'].background;
 
+    const [instructionText, setInstructionText] = useState<ReactNode>(<Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>);
     const [selectedWord, setSelectedWord] = useState<string>('');
+    const [swapWordChoices, setSwapWordChoices] = useState<string[]>([])
+    const [swapWordChoices2, setSwapWordChoices2] = useState<string[]>([])
 
+    // STAGE 1 data
     // get proverb data
     const proverb = 'when life gives you oranges'
-    const swapWordChoices = ['life', 'oranges']
-    const swapWordAnswer = 'oranges'
+    const swapWordAnswer = 'oranges';
+    const initialSwapWordChoices = ['life', 'oranges'];
+    useEffect(() => {
+        setSwapWordChoices(initialSwapWordChoices);
+    }, []);
 
-    const navigateToGameScreen2 = () => {
+    // remove a word after incorrect guess
+    const removeWord = (word: string) => {
+        setSwapWordChoices(oldChoices => oldChoices.filter(w => w !== word));
+    }
 
-    };
     const handleWLGYO1Submit = () => {
-        // if correct word, continue to screen 2
-        if (selectedWord == swapWordAnswer){
-            router.navigate('/wlgyo2')
+        // if correct word, continue to screen 2 with params
+        if (selectedWord == swapWordAnswer) {
+            setSwapWordChoices([swapWordAnswer]); // only bold correct swap word
+            router.navigate('/wlgyoGame2');
         }
-        // else vibrate and debold
+        // else vibrate and remove word from options
+        removeWord(selectedWord);
     };
+
     return (
         <View style={[styles.container, { backgroundColor }]}>
             {/* instructions */}
-            <ThemedTitleText style={styles.instruction} >Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</ThemedTitleText>
+            <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
 
             {/* selectable game text */}
             <SelectableProverbText
+                proverb={proverb}
+                swapWordChoices={swapWordChoices}
                 selectedWord={selectedWord}
                 setSelectedWord={setSelectedWord}
             />
@@ -55,7 +67,7 @@ const game = () => {
     )
 }
 
-export default game
+export default wlgyoGame1;
 
 const styles = StyleSheet.create({
     container: {
