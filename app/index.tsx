@@ -8,16 +8,25 @@ import { Colors } from "@/constants/Colors";
 import ThemedText from "@/components/ThemedText";
 import ThemedTitleText from "@/components/ThemedTitleText";
 import ThemedSubtitleText from "@/components/ThemedSubtitleText";
+import { useRef } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import SubscribeModal from "@/components/SubscribeModal";
 
 export default function Index() {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const textColor = Colors[colorScheme ?? 'light'].text;
+  const subscribeModalRef = useRef<BottomSheetModal>(null);
+
+  const handleShowSubscribeModal = () => {
+    subscribeModalRef.current?.present();
+  };
 
   return (
     <View
-      style={[styles.container, {backgroundColor}]}
+      style={[styles.container, { backgroundColor }]}
     >
+      <SubscribeModal ref={subscribeModalRef} />
       {/* header */}
       <View style={styles.header}>
         {/* title */}
@@ -32,7 +41,7 @@ export default function Index() {
       {/* buttons */}
       <View style={styles.menu}>
         {/* play button */}
-        <Link href='/game' style={[styles.btn, styles.primaryBtn]} asChild>
+        <Link href='/wlgyo1' style={[styles.btn, styles.primaryBtn]} asChild>
           <TouchableOpacity>
             <Text style={[styles.btnText, styles.primaryBtnText]}>Play</Text>
           </TouchableOpacity>
@@ -43,6 +52,12 @@ export default function Index() {
             <Text style={styles.btnText}>Archive</Text>
           </TouchableOpacity>
         </Link>
+        <TouchableOpacity
+          onPress={handleShowSubscribeModal}
+          style={styles.btn}
+        >
+          <Text style={styles.btnText}>Subscribe</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.btn}>
           <Text style={styles.btnText}>Settings</Text>
         </TouchableOpacity>
@@ -102,16 +117,16 @@ const styles = StyleSheet.create({
   },
   btnText: {
     padding: 14,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'semibold',
     color: buttonColors.buttonLightTextOrange
   },
   primaryBtn: {
-    backgroundColor: buttonColors.buttonOrange,
-    borderColor: buttonColors.buttonOrange
+    backgroundColor: Colors.light.buttonPrimaryBackgroundOrange,
+    borderColor: Colors.light.buttonPrimaryBackgroundOrange
   },
   primaryBtnText: {
-    color: buttonColors.buttonTextOrange
+    color: Colors.light.buttonPrimaryText
   },
   footer: {
     alignItems: 'center',
