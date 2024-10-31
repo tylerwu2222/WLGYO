@@ -51,6 +51,7 @@ export default function RootLayout() {
             <Stack.Screen name="wlgyoGame1" options={{ headerShown: false }} />
             <Stack.Screen name="wlgyoGame2" options={{ headerShown: false }} />
             <Stack.Screen name="wlgyoPostGame" options={{ headerShown: false }} />
+            <Stack.Screen name="archive" options={{ headerShown: false }} />
           </Stack>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>

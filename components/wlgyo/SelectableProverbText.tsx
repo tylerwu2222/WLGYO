@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import SelectableWord from './SelectableWord';
+import ThemedText from '../ThemedText';
 
 
 interface SelectableProverbTextProps {
@@ -31,25 +32,25 @@ const SelectableProverbText = ({
 
     return (
         <View style={styles.proverb}>
-            <Text style={styles.word}>
+            <ThemedText style={styles.word}>
                 "{(proverbList.map((word, index) => {
                     const isLastWord = index === proverbList.length - 1;
                     if (swapWordChoices.includes(word)) {
                         return (
-                            <Text key={word}>
+                            <ThemedText key={word}>
                                 <SelectableWord
                                     word={word}
                                     selectedWord={selectedWord}
                                     onPressFn={() => { handlePress(word) }}
                                 />{!isLastWord && ' '}
-                            </Text>
+                            </ThemedText>
                         )
                     }
-                    return <Text key={word} style={styles.word}>
+                    return <ThemedText key={word} style={styles.word}>
                         {word}{!isLastWord && ' '}
-                    </Text>
+                    </ThemedText>
                 }))}"
-            </Text>
+            </ThemedText>
         </View>
     )
 }

@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
+import ThemedText from '../ThemedText';
 
 interface FloatingSwapWord {
     word: string;
@@ -56,7 +57,7 @@ const FloatingSwapWord = ({
             <Pressable
                 onPress={onPressFn}
             >
-                <Text style={styles.word}>{word}</Text>
+                <ThemedText style={styles.word}>{word}</ThemedText>
             </Pressable>
         </Animated.View>
     )

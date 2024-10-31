@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
 import React, { useState, useEffect, ReactNode } from 'react'
 import ThemedTitleText from '@/components/ThemedTitleText';
-import { textColors, buttonColors } from '@/assets/consts/colors';
-import { Colors } from '@/constants/Colors';
+import { Colors, textColors, buttonColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import SelectableProverbText from '@/components/wlgyo/SelectableProverbText';
 import Animated from 'react-native-reanimated';
 import FloatingSwapView from '@/components/wlgyo/FloatingSwapView';
+import ThemedText from '@/components/ThemedText';
 
 
 const instructionsText = ''
@@ -30,7 +30,7 @@ const wlgyoGame2 = () => {
     // STAGE 2
     const initializeStage2 = () => {
         // update instructions
-        setInstructionText(<Text>Select the correct word to replace <Text style={{ fontWeight: '900' }}>{swapWordAnswer}</Text></Text>)
+        setInstructionText(<Text>Select the correct word to replace <Text style={{ fontWeight: '900' }}>oranges</Text></Text>)
         // move proverb to top
 
         // animate in options
@@ -41,7 +41,7 @@ const wlgyoGame2 = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             initializeStage2();
-        }, 1000); // 1 second delay
+        }, 500); // 0.5 second delay
 
         return () => clearTimeout(timer);
     }, []);
@@ -70,20 +70,18 @@ const wlgyoGame2 = () => {
             {/* instructions */}
             <View style={styles.subContainer}>
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
-            </View>
-            {/* proverb text */}
-            <Animated.View
-                style={styles.subContainer}
-            >
-                <Text style={[styles.word]}>{proverb}</Text>
-            </Animated.View>
+                {/* proverb text */}
+                <Animated.View>
+                    <ThemedText style={[styles.word]}>{proverb}</ThemedText>
+                </Animated.View>
 
-            {/* swappable word options */}
-            <View style={styles.subContainer}>
+                {/* swappable word options */}
+                {/* <View style={styles.floatView}> */}
                 <FloatingSwapView
                     swapWordChoices={swapWordChoices}
                     setSelectedWord={setSelectedWord}
                 />
+                {/* </View> */}
             </View>
         </View>
     )
@@ -93,13 +91,22 @@ export default wlgyoGame2;
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
-        paddingTop: 10,
+        display: 'flex',
+        flex: 1,
+        paddingHorizontal: 30,
         paddingBottom: 20,
-        alignItems: 'center'
+        justifyContent: 'space-between', // justify = main axis: center vertically
+        gap: 40
     },
     subContainer: {
-        paddingVertical: 10
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 50
+    },
+    floatView: {
+        // position: 'absolute',
+        // bottom: 50
     },
     instruction: {
         fontSize: 20,

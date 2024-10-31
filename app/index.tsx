@@ -1,10 +1,9 @@
 import { Text, View, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import Icon from '@/assets/images/wordle-icon.svg';
 import { Link } from "expo-router";
-import { buttonColors, textColors } from "@/assets/consts/colors";
 import { format } from 'date-fns';
 
-import { Colors } from "@/constants/Colors";
+import { Colors, buttonColors, textColors } from "@/constants/Colors";
 import ThemedText from "@/components/ThemedText";
 import ThemedTitleText from "@/components/ThemedTitleText";
 import ThemedSubtitleText from "@/components/ThemedSubtitleText";

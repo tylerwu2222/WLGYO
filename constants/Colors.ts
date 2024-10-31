@@ -3,47 +3,48 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
   light: {
     text: '#11181C',
-    // titleText: '',
     titleTextOrange: '#ffa509',
     subtitleTextOrange: '#ffc764',
-    buttonPrimaryText: '#ECEDEE',
     bodyText: '#472d00',
     highlightText: '#ffdb9a',
-    icon: '#472d00',
-    footerText:'#9c6c1a',
+    footerText: '#9c6c1a',
     footerText2: '#c49951',
-    
-    buttonPrimaryBackgroundOrange: '#ffa509',
-    buttonText: '#ffdb9a',
 
-    background: '#fffaeb',    
-    tint: tintColorLight,
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    icon: '#472d00',
+
+    buttonPrimaryText: '#ECEDEE',
+    buttonPrimaryBackgroundOrange: '#ffa509',
+
+    buttonText: '#472d00',
+    buttonBackground: '#ffc764',
+
+    background: '#fffaeb',
   },
   dark: {
     text: '#ECEDEE',
-    // background: '#595755',
-    titleTextOrange:'#ffa509',
+    titleTextOrange: '#ffa509',
     subtitleTextOrange: '#ffc764',
     bodyText: '#ECEDEE',
-    icon: '#ECEDEE',
-    footerText:'#9c6c1a',
-    background: '#3a3a3a',
+    highlightText: '#cb7f00',
+    footerText: '#9c6c1a',
+    footerText2: '#c49951',
 
-    tint: tintColorDark,
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    icon: '#ECEDEE',
+
+    buttonPrimaryText: '#ECEDEE',
+    buttonPrimaryBackgroundOrange: '#ffa509',
+
+    buttonText: '#ffdb9a',
+    buttonBackground: '#ffc764',
+
+    background: '#73572b',
   },
 };
 
-const buttonColors = {
+export const buttonColors = {
   buttonLightOrange: '#fff7e1',
   buttonLightTextOrange: '#ffab1b',
   buttonOrange: '#ffc764',
@@ -51,7 +52,7 @@ const buttonColors = {
   // buttonTextOrange: '#b06d00'
 }
 
-const textColors = {
+export const textColors = {
   titleTextOrange: '#ffa509',
   subtitleTextOrange: '#ffc764',
   footerTextOrange: '#c49951',
@@ -63,3 +64,16 @@ export const backgroundColors = {
   backgroundLight: '#fffaeb',
   backgroundDark: '#595755'
 }
+
+const oranges = [
+  "#fff7e1",
+  "#ffedcb",
+  "#ffdb9a",
+  "#ffc764",
+  "#ffb638",
+  "#ffab1b",
+  "#ffa509",
+  "#e39000",
+  "#cb7f00",
+  "#b06d00"
+]

@@ -1,4 +1,5 @@
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, useColorScheme } from 'react-native'
+import ThemedText from '../ThemedText'
 import React, { useEffect } from 'react'
 import { Pressable } from 'react-native'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
@@ -15,12 +16,13 @@ const SelectableWord = ({
     selectedWord,
     onPressFn = () => { }
 }: SelectableWordProps) => {
+    const colorScheme = useColorScheme();
 
     const scale = useSharedValue(0);
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ scale: scale.value }],
         opacity: scale.value,
-        backgroundColor: Colors.light.highlightText, // The fill color you want
+        backgroundColor: Colors[colorScheme === 'dark' ? 'dark' : 'light'].highlightText, // The fill color you want
         padding: 10,
         borderRadius: 10
     }));
@@ -42,10 +44,10 @@ const SelectableWord = ({
             }}
         >
             <Animated.View style={[styles.animatedBackground, animatedStyle]} />
-            <Text
+            <ThemedText
                 style={[styles.word, styles.swappableWord]}>
                 {word}
-            </Text>
+            </ThemedText>
         </Pressable>
     )
 }
