@@ -59,7 +59,7 @@ const SubscribeModal = forwardRef<Ref>((props, ref) => {
                 </TouchableOpacity>
             </View>
             <BottomSheetScrollView>
-                <Text style={styles.containerHeadline}>When life gives you $4.{'\n'}Buy a lifetime of WLGYO.</Text>
+                <Text style={styles.containerHeadline}>When life gives you $3.{'\n'}Buy a lifetime of WLGYO.</Text>
 
                 <View style={{ marginVertical: 20 }}>
                     <MarkedList
@@ -72,20 +72,22 @@ const SubscribeModal = forwardRef<Ref>((props, ref) => {
                         ))}
                     </MarkedList>
                 </View>
-                <Text style={styles.disclaimer}>
+                {/* <Text style={styles.disclaimer}>
                     Buy more oranges.
-                </Text>
+                </Text> */}
             </BottomSheetScrollView>
             <View style={[styles.footer, { paddingBottom: bottom }]}>
-                <View style={styles.footerBtn}>
-                    <TouchableOpacity style={defaultStyles.btn}>
-                        <Text style={defaultStyles.btnText}>Purchase lifetime access</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.footerBtn}>
-                    <TouchableOpacity style={defaultStyles.btn}>
-                        <Text style={defaultStyles.btnText}>Preview</Text>
-                    </TouchableOpacity>
+                <View style={styles.footerButtonView}>
+                    <View style={styles.footerBtn}>
+                        <TouchableOpacity style={defaultStyles.btn}>
+                            <Text style={defaultStyles.btnText}>Purchase</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.footerBtn}>
+                        <TouchableOpacity style={defaultStyles.btn}>
+                            <Text style={defaultStyles.btnText}>Try it out!</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <Text style={styles.footerText}>Preview ends after 24 hours.</Text>
             </View>
@@ -148,6 +150,12 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 5,
         paddingTop: 20,
+    },
+    footerButtonView: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        gap: 20
     },
     footerBtn: {
         paddingTop: 10,

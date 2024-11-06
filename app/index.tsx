@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
-import Icon from '@/assets/images/wordle-icon.svg';
+import Icon from '@/assets/images/oj-icon.svg';
 import { Link } from "expo-router";
 import { format } from 'date-fns';
 import Animated from "react-native-reanimated";
@@ -51,23 +51,25 @@ export default function Index() {
         {/* title */}
         <ThemedTitleText style={styles.title}>When life gives you oranges</ThemedTitleText>
         <ThemedSubtitleText style={styles.subtitle}>(Is that the saying? 🤔)</ThemedSubtitleText>
-        {/* logo */}
+
+      </View>
+      {/* logo */}
+      <View style={styles.menu}>
         <Icon width={100} height={100} />
       </View>
-
       {/* buttons */}
       <View style={styles.menu}>
         {/* play button */}
         {/* navigate to screen 2 if only one keyword */}
         <Link href={dailyIdiom.keywords.length == 1 ? '/wlgyoGame2' : '/wlgyoGame1'} style={[styles.btn, styles.primaryBtn]} asChild>
           <TouchableOpacity>
-            <Text style={[styles.btnText, styles.primaryBtnText]}>Play</Text>
+            <Text style={[styles.btnText, styles.primaryBtnText]}>Daily</Text>
           </TouchableOpacity>
         </Link>
         {/* archive button */}
         <Link href='/archive' style={styles.btn} asChild>
           <TouchableOpacity>
-            <Text style={styles.btnText}>Archive</Text>
+            <Text style={styles.btnText}>Collection</Text>
           </TouchableOpacity>
         </Link>
         <TouchableOpacity
@@ -76,9 +78,9 @@ export default function Index() {
         >
           <Text style={styles.btnText}>Subscribe</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn}>
+        {/* <TouchableOpacity style={styles.btn}>
           <Text style={styles.btnText}>Settings</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       {/* footer info */}

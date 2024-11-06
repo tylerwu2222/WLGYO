@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     },
     subContainer: {
         flex: 1,
+        flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
         gap: 50
