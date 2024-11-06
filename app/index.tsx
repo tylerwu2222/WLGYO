@@ -26,7 +26,7 @@ export default function Index() {
     dailyIdiom
   } = useContext(IdiomContext);
   const route = useRoute();
-
+  const isLoggedIn = false;
 
   const handleShowSubscribeModal = () => {
     subscribeModalRef.current?.present();
@@ -63,7 +63,7 @@ export default function Index() {
         {/* navigate to screen 2 if only one keyword */}
         <Link href={dailyIdiom.keywords.length == 1 ? '/wlgyoGame2' : '/wlgyoGame1'} style={[styles.btn, styles.primaryBtn]} asChild>
           <TouchableOpacity>
-            <Text style={[styles.btnText, styles.primaryBtnText]}>Daily</Text>
+            <Text style={[styles.btnText, styles.primaryBtnText]}>Daily idiom</Text>
           </TouchableOpacity>
         </Link>
         {/* archive button */}
@@ -72,12 +72,14 @@ export default function Index() {
             <Text style={styles.btnText}>Collection</Text>
           </TouchableOpacity>
         </Link>
-        <TouchableOpacity
-          onPress={handleShowSubscribeModal}
-          style={styles.btn}
-        >
-          <Text style={styles.btnText}>Subscribe</Text>
-        </TouchableOpacity>
+        {isLoggedIn ? <></> :
+          <TouchableOpacity
+            onPress={handleShowSubscribeModal}
+            style={styles.btn}
+          >
+            <Text style={styles.btnText}>Subscribe</Text>
+          </TouchableOpacity>
+        }
         {/* <TouchableOpacity style={styles.btn}>
           <Text style={styles.btnText}>Settings</Text>
         </TouchableOpacity> */}

@@ -19,7 +19,7 @@ export const Colors = {
     buttonPrimaryBackgroundOrange: '#ffa509',
 
     buttonText: '#472d00',
-    buttonBackground: '#ffc764',
+    buttonBackground: '#fff7e1',
 
     background: '#fffaeb',
   },
@@ -37,8 +37,8 @@ export const Colors = {
     buttonPrimaryText: '#ECEDEE',
     buttonPrimaryBackgroundOrange: '#ffa509',
 
-    buttonText: '#ffdb9a',
-    buttonBackground: '#ffc764',
+    buttonText: '#472d00',
+    buttonBackground: '#fff7e1',
 
     background: '#73572b',
   },

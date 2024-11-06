@@ -87,11 +87,13 @@ const wlgyoGame2 = () => {
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
 
                 {/* idiom text */}
-                <ThemedText style={[styles.word]}>
-                    <PartiallyBoldedText
-                        text={dailyIdiom.idiom_modified}
-                        boldedWords={[dailyIdiom.swapword_incorrect]} />
-                </ThemedText>
+                <View style={styles.idiomContainer}>
+                    <ThemedText style={[styles.word]}>
+                        <PartiallyBoldedText
+                            text={dailyIdiom.idiom_modified}
+                            boldedWords={[dailyIdiom.swapword_incorrect]} />
+                    </ThemedText>
+                </View>
 
                 {/* swappable word options */}
                 <FloatingSwapView
@@ -108,22 +110,24 @@ export default wlgyoGame2;
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
+        flexDirection: 'column',
         flex: 1,
         paddingHorizontal: 30,
-        paddingBottom: 20,
-        justifyContent: 'space-between', // justify = main axis: center vertically
-        gap: 40
+        paddingTop: 100,
+        // paddingBottom: 20,
+        // justifyContent: 'space-between',
+        // gap: 40
     },
     subContainer: {
         flex: 1,
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'column',
+        // justifyContent: 'center',
+        alignItems: 'center', // center horizontally (along main axis)
         gap: 50
     },
-    floatView: {
-        // position: 'absolute',
-        // bottom: 50
+    idiomContainer: {
+        flexWrap: 'wrap',
+        lineHeight: 60
     },
     instruction: {
         fontSize: 20,
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
     },
     word: {
         fontSize: 30,
-        lineHeight: 40,
+        lineHeight: 60,
         fontFamily: 'Nunito_300Light',
         display: 'flex',
         justifyContent: 'center'

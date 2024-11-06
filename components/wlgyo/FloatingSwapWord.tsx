@@ -27,8 +27,7 @@ const FloatingSwapWord = ({
         transform: [
             { translateX: floatX.value },
             { translateY: floatY.value },
-        ],
-        padding: 5
+        ]
     }));
 
     useEffect(() => {
@@ -75,7 +74,12 @@ const styles = StyleSheet.create({
     wordContainer: {
         position: 'absolute',
         backgroundColor: Colors.light.buttonPrimaryBackgroundOrange,
-        padding: 5,
-        borderRadius: 5
+        // padding: 5,
+        padding: 10,
+        minWidth: 40,
+        paddingHorizontal: 15,
+        borderRadius: 15,
+        display: 'flex',
+        justifyContent: 'center'
     },
 })

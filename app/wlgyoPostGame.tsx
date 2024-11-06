@@ -8,9 +8,10 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
 import ThemedText from '@/components/ThemedText';
 import ThemedTitleText from '@/components/ThemedTitleText';
-import Animated from 'react-native-reanimated';
-import Carousel from 'react-native-reanimated-carousel';
+import { useSharedValue } from 'react-native-reanimated';
+import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import { defaultStyles } from '@/constants/Styles';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface carouselCard {
   header: string,
@@ -27,12 +28,12 @@ const wlgyo_postgame = () => {
   // const navigation = useNavigation();
   // const router = useRouter();
   const screenWidth = Dimensions.get('window').width;
-
+  const progress = useSharedValue(0);
   // create idiom meaning/etymology data for carousel
   let carouselData: carouselCard[] = [
     {
       header: 'Definition',
-      content: dailyIdiom.definitions.join('\n')
+      content: dailyIdiom.definitions.join('\n\n')
     }
   ]
   if (dailyIdiom.etymology) {
@@ -55,11 +56,12 @@ const wlgyo_postgame = () => {
           <ThemedText style={styles.word}>"{dailyIdiom.idiom}"</ThemedText>
           {/* definition/etymology/example carousel */}
           <Carousel
-            // loop
+            loop={false}
             width={screenWidth}
-            height={screenWidth / 2}
+            height={screenWidth * 2 / 3}
             // autoPlay={true}
             data={carouselData}
+            onProgressChange={progress}
             // data={[...new Array(3).keys()]}
             // scrollAnimationDuration={1000}
             // onSnapToItem={(index) => console.log('current index:', index)}
@@ -76,14 +78,23 @@ const wlgyo_postgame = () => {
               </View>
             )}
           />
+          {carouselData.length > 1 ?
+            <Pagination.Basic
+              progress={progress}
+              data={carouselData}
+              dotStyle={styles.dotStyle}
+              containerStyle={styles.dotContainer}
+            /> : <></>
+          }
+
           {/* save idiom, change to star icon */}
-          <TouchableOpacity style={[defaultStyles.btn, defaultStyles.primaryBtn]}>
+          <TouchableOpacity style={[defaultStyles.btn, defaultStyles.primaryBtn, { width: 160 }]}>
             <Text style={[defaultStyles.btnText, defaultStyles.primaryBtnText]}>Save idiom</Text>
           </TouchableOpacity>
           {/* navigation buttons */}
           <View>
             {/* return home */}
-            <Link href='/' style={defaultStyles.btn} asChild>
+            <Link href='/' style={[defaultStyles.btn, { width: 160 }]} asChild>
               <TouchableOpacity
               >
                 <Text style={defaultStyles.btnText}>Home</Text>
@@ -135,6 +146,7 @@ const styles = StyleSheet.create({
   },
   word: {
     fontSize: 30,
+    fontWeight: 'bold',
     lineHeight: 40,
     fontFamily: 'Nunito_300Light',
     display: 'flex',
@@ -142,16 +154,23 @@ const styles = StyleSheet.create({
   },
   carouselCard: {
     flex: 1,
-    borderWidth: 1,
-    padding: 10,
-    justifyContent: 'center',
+    // minHeight: 100,
+    // height: '100%',
+    padding: 30,
+    margin: 30,
+    backgroundColor: Colors.dark.buttonBackground,
+    borderRadius: 10,
+    justifyContent: 'center'
   },
   carouselText: {
-    fontSize: 25
+    fontSize: 25,
+    fontStyle: 'italic',
+    color: Colors.dark.buttonText
   },
   carouselHeader: {
     fontSize: 35,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: Colors.dark.buttonText
   },
   btn: {
     justifyContent: 'center',
@@ -169,4 +188,6 @@ const styles = StyleSheet.create({
     fontWeight: 'semibold',
     color: buttonColors.buttonLightTextOrange
   },
+  dotContainer: { gap: 5, marginBottom: 10 },
+  dotStyle: { backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 },
 })
