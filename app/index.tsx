@@ -2,20 +2,27 @@ import { Text, View, StyleSheet, TouchableOpacity, useColorScheme } from "react-
 import Icon from '@/assets/images/wordle-icon.svg';
 import { Link } from "expo-router";
 import { format } from 'date-fns';
+import Animated from "react-native-reanimated";
 
 import { Colors, buttonColors, textColors } from "@/constants/Colors";
-import ThemedText from "@/components/ThemedText";
+// import ThemedText from "@/components/ThemedText";
 import ThemedTitleText from "@/components/ThemedTitleText";
 import ThemedSubtitleText from "@/components/ThemedSubtitleText";
-import { useRef } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
+import { IdiomContext } from "./_layout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SubscribeModal from "@/components/SubscribeModal";
+
+
 
 export default function Index() {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const textColor = Colors[colorScheme ?? 'light'].text;
   const subscribeModalRef = useRef<BottomSheetModal>(null);
+  const {
+    dailyIdiom
+  } = useContext(IdiomContext);
 
   const handleShowSubscribeModal = () => {
     subscribeModalRef.current?.present();
@@ -29,10 +36,8 @@ export default function Index() {
       {/* header */}
       <View style={styles.header}>
         {/* title */}
-        {/* <Text style={styles.title}>WLGYO</Text> */}
-        {/* <Text style={styles.title}>When life gives you oranges</Text> */}
         <ThemedTitleText style={styles.title}>When life gives you oranges</ThemedTitleText>
-        <ThemedSubtitleText style={styles.subtitle}>(Is that the saying?)</ThemedSubtitleText>
+        <ThemedSubtitleText style={styles.subtitle}>(Is that the saying? 🤔)</ThemedSubtitleText>
         {/* logo */}
         <Icon width={100} height={100} />
       </View>
@@ -40,7 +45,8 @@ export default function Index() {
       {/* buttons */}
       <View style={styles.menu}>
         {/* play button */}
-        <Link href='/wlgyoGame1' style={[styles.btn, styles.primaryBtn]} asChild>
+        {/* navigate to screen 2 if only one keyword */}
+        <Link href={dailyIdiom.keywords.length == 1 ? '/wlgyoGame2' : '/wlgyoGame1'} style={[styles.btn, styles.primaryBtn]} asChild>
           <TouchableOpacity>
             <Text style={[styles.btnText, styles.primaryBtnText]}>Play</Text>
           </TouchableOpacity>

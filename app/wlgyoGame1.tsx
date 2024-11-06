@@ -1,9 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useState, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect, useContext, ReactNode } from 'react'
+import { IdiomContext } from './_layout';
+// import { Link } from 'expo-router';
+
 import ThemedTitleText from '@/components/ThemedTitleText';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
-import SelectableProverbText from '@/components/wlgyo/SelectableProverbText';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import SelectableIdiomText from '@/components/wlgyo/SelectableIdiomText';
+
+import * as Haptics from 'expo-haptics';
+
+import Animated from 'react-native-reanimated';
 
 const wlgyoGame1 = () => {
 
@@ -14,14 +24,21 @@ const wlgyoGame1 = () => {
     const instructionText = <Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>;
     const [selectedWord, setSelectedWord] = useState<string>('');
     const [swapWordChoices, setSwapWordChoices] = useState<string[]>([])
+    const {
+        dailyIdiom
+    } = useContext(IdiomContext);
+
+    // console.log('daily idiom in screen 1', dailyIdiom);
 
     // STAGE 1 data
-    // get proverb data
-    const proverb = 'when life gives you oranges'
-    const swapWordAnswer = 'oranges';
-    const initialSwapWordChoices = ['life', 'oranges'];
+    // change eventually to params
+    // const idiom = 'when life gives you oranges'
+    // const swapWordAnswer = 'oranges';
+    // const initialSwapWordChoices = ['life', 'oranges'];
+
     useEffect(() => {
-        setSwapWordChoices(initialSwapWordChoices);
+        const choices = dailyIdiom.keywords.filter(w => w !== dailyIdiom.swapword).concat([dailyIdiom.swapword_incorrect])
+        setSwapWordChoices(choices);
     }, []);
 
     // remove a word after incorrect guess
@@ -31,11 +48,19 @@ const wlgyoGame1 = () => {
 
     const handleWLGYO1Submit = () => {
         // if correct word, continue to screen 2 with params
-        if (selectedWord == swapWordAnswer) {
-            setSwapWordChoices([swapWordAnswer]); // only bold correct swap word
+        if (selectedWord == dailyIdiom.swapword_incorrect) {
+            Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+            )
+            setSwapWordChoices([dailyIdiom.swapword_incorrect]); // only bold correct swap word
             router.navigate('/wlgyoGame2');
         }
         // else vibrate and remove word from options
+        console.log(selectedWord, 'incorrect, vibrate?')
+        // Haptics.notificationAsync(
+        //     Haptics.NotificationFeedbackType.Error
+        // )
+
         removeWord(selectedWord);
     };
 
@@ -44,24 +69,26 @@ const wlgyoGame1 = () => {
             <View style={styles.subContainer}>
                 {/* instructions */}
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
-
-                {/* selectable game text */}
-                <SelectableProverbText
-                    proverb={proverb}
-                    swapWordChoices={swapWordChoices}
+                {/* selectable text */}
+                <SelectableIdiomText
+                    idiom={dailyIdiom.idiom_modified}
+                    keywords={swapWordChoices}
                     selectedWord={selectedWord}
                     setSelectedWord={setSelectedWord}
                 />
-
+                
                 {/* submit button */}
                 <TouchableOpacity
-                    onPress={() => { handleWLGYO1Submit() }}
+                    onPress={() => {
+                        handleWLGYO1Submit();
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+                    }}
                     style={[styles.btn, styles.primaryBtn, styles.submitBtn]}
                 >
                     <Text style={[styles.btnText, styles.primaryBtnText]}>submit</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
     )
 }
 
@@ -119,7 +146,7 @@ const styles = StyleSheet.create({
     primaryBtnText: {
         color: buttonColors.buttonTextOrange
     },
-    submitBtn:{
+    submitBtn: {
         position: 'absolute',
         bottom: 20
     }

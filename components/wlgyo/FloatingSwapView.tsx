@@ -3,13 +3,13 @@ import React, { Dispatch, SetStateAction } from 'react'
 import FloatingSwapWord from './FloatingSwapWord'
 
 interface FloatingSwapViewProps {
-    swapWordChoices: string[];
+    keywords: string[]|undefined;
     // selectedWord: string;
     setSelectedWord: Dispatch<SetStateAction<string>>
 }
 
 const FloatingSwapView = ({
-    swapWordChoices,
+    keywords,
     setSelectedWord }: FloatingSwapViewProps) => {
 
     const handlePress = (word: string) => {
@@ -18,7 +18,7 @@ const FloatingSwapView = ({
 
     return (
         <View style={styles.floatingView}>
-            {swapWordChoices.map((w, index) => {
+            {keywords && keywords.map((w, index) => {
                 const initialX = 0; // Adjust for spacing between columns
                 const initialY = index * 100; // Adjust for spacing between rows
                 return (

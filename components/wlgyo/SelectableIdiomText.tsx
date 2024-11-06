@@ -5,24 +5,24 @@ import SelectableWord from './SelectableWord';
 import ThemedText from '../ThemedText';
 
 
-interface SelectableProverbTextProps {
-    proverb?: string;
-    swapWordChoices?: string[];
+interface SelectableIdiomTextProps {
+    idiom?: string;
+    keywords?: string[];
     // swapWordAnswer?: string;
     selectedWord: string;
     setSelectedWord: Dispatch<SetStateAction<string>>
 }
 
 // render 
-const SelectableProverbText = ({
-    proverb = 'when life gives you oranges',
-    swapWordChoices = ['life', 'oranges'],
+const SelectableIdiomText = ({
+    idiom = 'when life gives you oranges',
+    keywords = ['life', 'oranges'],
     // swapWordAnswer = 'oranges',
     selectedWord,
     setSelectedWord
-}: SelectableProverbTextProps) => {
+}: SelectableIdiomTextProps) => {
 
-    const proverbList = proverb.split(' ');
+    const idiomList = idiom.split(' ');
 
     const scale = useSharedValue(0);
 
@@ -31,11 +31,11 @@ const SelectableProverbText = ({
     };
 
     return (
-        <View style={styles.proverb}>
+        <View style={styles.idiom}>
             <ThemedText style={styles.word}>
-                "{(proverbList.map((word, index) => {
-                    const isLastWord = index === proverbList.length - 1;
-                    if (swapWordChoices.includes(word)) {
+                "{(idiomList.map((word, index) => {
+                    const isLastWord = index === idiomList.length - 1;
+                    if (keywords.includes(word)) {
                         return (
                             <ThemedText key={word}>
                                 <SelectableWord
@@ -55,10 +55,10 @@ const SelectableProverbText = ({
     )
 }
 
-export default SelectableProverbText
+export default SelectableIdiomText
 
 const styles = StyleSheet.create({
-    proverb: {
+    idiom: {
         display: 'flex',
         alignItems: 'center'
     },

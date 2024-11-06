@@ -1,39 +1,66 @@
-import { StyleSheet, Text, View, useColorScheme } from 'react-native'
-import React from 'react'
-import { Colors, textColors } from '@/constants/Colors';
+import { StyleSheet, Text, View, TouchableOpacity, useColorScheme } from 'react-native'
+import React, { useContext } from 'react'
+import { IdiomContext } from './_layout';
+import { useNavigation, Link, useRouter } from 'expo-router';
+import { useIsFocused } from '@react-navigation/native';
+
+import { Colors, textColors, buttonColors } from '@/constants/Colors';
 import ThemedText from '@/components/ThemedText';
 import ThemedTitleText from '@/components/ThemedTitleText';
+import Animated from 'react-native-reanimated';
 
-const wlgyo2 = () => {
+const wlgyo_postgame = () => {
+
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
-
-  const proverb = 'when life gives you lemons';
+  const {
+    dailyIdiom
+  } = useContext(IdiomContext);
+  // const navigation = useNavigation();
+  // const router = useRouter();
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
-      <View>
-        <ThemedTitleText style={styles.instruction}>That's right! The saying goes:</ThemedTitleText>
-        <ThemedText style={styles.word}>{proverb}</ThemedText>
+      <View style={styles.subContainer}>
+        {/* instructions */}
+        <ThemedTitleText style={styles.instruction}>That's right! The correct saying is:</ThemedTitleText>
+
+        {/* correct idiom */}
+        <ThemedText style={styles.word}>{dailyIdiom.idiom}</ThemedText>
+
+        {/* return home */}
+        <Link href='/' style={styles.btn} asChild>
+          <TouchableOpacity
+          >
+            <Text style={styles.btnText}>Home</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
       {/* other player stats/trivia */}
       <View>
+
         <ThemedText>Stats / trivia</ThemedText>
       </View>
-    </View>
+    </View >
   )
 }
 
-export default wlgyo2
+export default wlgyo_postgame;
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    height: '100%',
-    justifyContent: 'center',
-    paddingTop: 10,
+    flex: 1,
+    paddingHorizontal: 30,
     paddingBottom: 20,
-    alignItems: 'center'
+    justifyContent: 'space-between', // justify = main axis: center vertically
+    gap: 40
+  },
+  subContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 50
   },
   instruction: {
     fontSize: 20,
@@ -51,5 +78,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_300Light',
     display: 'flex',
     justifyContent: 'center'
+  },
+  btn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: buttonColors.buttonLightOrange,
+    borderColor: buttonColors.buttonLightTextOrange,
+    borderWidth: 1,
+    width: '30%',
+    maxWidth: 200
+  },
+  btnText: {
+    padding: 14,
+    fontSize: 18,
+    fontWeight: 'semibold',
+    color: buttonColors.buttonLightTextOrange
   },
 })

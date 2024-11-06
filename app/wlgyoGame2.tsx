@@ -1,13 +1,22 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useState, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect, useContext, ReactNode } from 'react'
+import { IdiomContext } from './_layout';
+import { Link } from 'expo-router';
+
 import ThemedTitleText from '@/components/ThemedTitleText';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
-import { useRouter } from 'expo-router';
-import SelectableProverbText from '@/components/wlgyo/SelectableProverbText';
-import Animated from 'react-native-reanimated';
 import FloatingSwapView from '@/components/wlgyo/FloatingSwapView';
 import ThemedText from '@/components/ThemedText';
 
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useRouter } from 'expo-router';
+
+import Animated from 'react-native-reanimated';
+
+import * as Haptics from 'expo-haptics';
+import PartiallyBoldedText from '@/components/wlgyo/PartiallyBoldedText';
 
 const instructionsText = ''
 const wlgyoGame2 = () => {
@@ -20,21 +29,23 @@ const wlgyoGame2 = () => {
     const [instructionText, setInstructionText] = useState<ReactNode>(<Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>);
     const [selectedWord, setSelectedWord] = useState<string>('');
     const [swapWordChoices, setSwapWordChoices] = useState<string[]>([]);
+    const {
+        dailyIdiom
+    } = useContext(IdiomContext);
 
     // STAGE 2
-    // get proverb data
-    const proverb = 'when life gives you oranges'
-    const initialSwapWordChoices = ['apples', 'lemons', 'bananas', 'peaches'];
+    // get idiom data
+    // const initialSwapWordChoices = ['apples', 'lemons', 'bananas', 'peaches'];
     const swapWordAnswer = 'lemons';
 
-    // STAGE 2
     const initializeStage2 = () => {
         // update instructions
-        setInstructionText(<Text>Select the correct word to replace <Text style={{ fontWeight: '900' }}>oranges</Text></Text>)
-        // move proverb to top
+        setInstructionText(<Text>Select the correct word to replace <Text style={{ fontWeight: '900' }}>{dailyIdiom.swapword_incorrect}</Text></Text>)
 
-        // animate in options
-        setSwapWordChoices(initialSwapWordChoices);
+        // set choices to swapword + swapword distractors
+        const distractors_random = dailyIdiom.swapword_distractors.sort(() => 0.5 - Math.random());
+        const choices = distractors_random.slice(0, 4).concat([dailyIdiom.swapword]);
+        setSwapWordChoices(choices);
     };
 
     // initialize animation to stage 2 after 1 second
@@ -50,14 +61,18 @@ const wlgyoGame2 = () => {
         setSwapWordChoices(oldChoices => oldChoices.filter(w => w !== word));
     };
 
-
-
     const handleWLGYO2Submit = () => {
         // if correct word, continue to screen 2
-        if (selectedWord == swapWordAnswer) {
+        if (selectedWord == dailyIdiom.swapword) {
+            Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+            )
             router.navigate('/wlgyoPostGame')
         }
         // else vibrate and remove word from options
+        Haptics.notificationAsync(
+            Haptics.NotificationFeedbackType.Error
+        )
         removeWord(selectedWord);
     };
 
@@ -67,21 +82,22 @@ const wlgyoGame2 = () => {
 
     return (
         <View style={[styles.container, { backgroundColor }]}>
-            {/* instructions */}
             <View style={styles.subContainer}>
+                {/* instructions */}
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
-                {/* proverb text */}
-                <Animated.View>
-                    <ThemedText style={[styles.word]}>{proverb}</ThemedText>
-                </Animated.View>
+
+                {/* idiom text */}
+                <ThemedText style={[styles.word]}>
+                    <PartiallyBoldedText
+                        text={dailyIdiom.idiom_modified}
+                        boldedWords={[dailyIdiom.swapword_incorrect]} />
+                </ThemedText>
 
                 {/* swappable word options */}
-                {/* <View style={styles.floatView}> */}
                 <FloatingSwapView
-                    swapWordChoices={swapWordChoices}
+                    keywords={swapWordChoices}
                     setSelectedWord={setSelectedWord}
                 />
-                {/* </View> */}
             </View>
         </View>
     )

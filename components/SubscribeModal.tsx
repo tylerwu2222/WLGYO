@@ -18,7 +18,7 @@ import { Colors } from '@/constants/Colors';
 
 const Benefits = [
     'Access to all past daily WLGYO',
-    'Star and label your favorite proverbs',
+    'Star and label your favorite idioms',
     'Extra hints!',
     'Track your progress',
 ];
