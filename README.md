@@ -1,4 +1,4 @@
-# WLGYO (When life gives you oranges)
+# WLGY🍊 (When life gives you oranges)
 WLGYO is an educational word game app revolving around identifying and learning English idioms.
 The app is ideally for ESL users who want to learn more conversational English, but native speakers can also play too to learn more idioms!
 
