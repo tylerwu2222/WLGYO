@@ -5,6 +5,7 @@ import { useFonts, Nunito_400Regular, Nunito_300Light } from '@expo-google-fonts
 import { useEffect, useState, createContext, Dispatch, SetStateAction } from 'react';
 import { Stack } from "expo-router";
 
+
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -24,6 +25,7 @@ SplashScreen.preventAutoHideAsync();
 interface IdiomContextProps {
   dailyIdiom: dailyIdiomType;
   setDailyIdiom: Dispatch<SetStateAction<dailyIdiomType>>;
+  fetchDailyIdiom: () => Promise<void>
 }
 
 export const IdiomContext = createContext({} as IdiomContextProps);
@@ -57,12 +59,6 @@ export default function RootLayout() {
     // console.log('fetched random idiom FE', res)
   };
 
-  // fetch and set notes on component mount/user change
-  useEffect(() => {
-    fetchDailyIdiom();
-    // }
-  }, []);
-
   useEffect(() => {
     // only hide (proceed) from splash screen after fonts loaded
     if (fontsLoaded) {
@@ -80,7 +76,8 @@ export default function RootLayout() {
       <IdiomContext.Provider
         value={{
           dailyIdiom,
-          setDailyIdiom
+          setDailyIdiom,
+          fetchDailyIdiom
         }}
       >
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -92,10 +89,11 @@ export default function RootLayout() {
               <Stack.Screen
                 name="login"
                 options={{
+                  title: "Login",
                   presentation: 'modal',
                   headerShown: false
                 }} />
-              <Stack.Screen name="wlgyoGame1" options={{ headerShown: false }} />
+              <Stack.Screen name="wlgyoGame1" options={{ title: "WLGYO screen 1", headerShown: false }} />
               <Stack.Screen name="wlgyoGame2" options={{ headerShown: false }} />
               <Stack.Screen name="wlgyoPostGame" options={{ headerShown: false }} />
               <Stack.Screen name="archive" options={{ headerShown: false }} />

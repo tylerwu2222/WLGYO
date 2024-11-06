@@ -17,7 +17,7 @@ const PartiallyBoldedText = ({
 }: PartiallyBoldedTextProps) => {
 
     const textList = text.split(' ');
-    console.log('bold props', text, boldedWords);
+    // console.log('bold props', text, boldedWords);
     return (
         <View style={styles.text}>
             <ThemedText style={styles.word}>

@@ -8,10 +8,11 @@ import { Colors, buttonColors, textColors } from "@/constants/Colors";
 // import ThemedText from "@/components/ThemedText";
 import ThemedTitleText from "@/components/ThemedTitleText";
 import ThemedSubtitleText from "@/components/ThemedSubtitleText";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useCallback, useEffect, useRef } from "react";
 import { IdiomContext } from "./_layout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SubscribeModal from "@/components/SubscribeModal";
+import { useRoute } from "@react-navigation/native";
 
 
 
@@ -21,12 +22,24 @@ export default function Index() {
   const textColor = Colors[colorScheme ?? 'light'].text;
   const subscribeModalRef = useRef<BottomSheetModal>(null);
   const {
+    fetchDailyIdiom,
     dailyIdiom
   } = useContext(IdiomContext);
+  const route = useRoute();
+
 
   const handleShowSubscribeModal = () => {
     subscribeModalRef.current?.present();
   };
+
+
+  // fetch and set notes each time navigate to home
+  useEffect(() => {
+    // console.log('route',route.name)
+    if (route.name === 'index') {
+      fetchDailyIdiom();
+    }
+  }, [route]);
 
   return (
     <View
