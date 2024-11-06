@@ -1,50 +1,23 @@
-# Welcome to your Expo app 👋
+# WLGYO (When life gives you oranges)
+WLGYO is an educational word game app revolving around identifying and learning English idioms.
+The app is ideally for ESL users who want to learn more conversational English, but native speakers can also play too to learn more idioms!
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## Dev log
+11/5/24:
+Created main idiom dataset and created skeleton of screen flow for Idiom Swap game mode:
 
-1. Install dependencies
+https://github.com/user-attachments/assets/cdb99453-0007-4798-8dc5-0709687b9c29
 
-   ```bash
-   npm install
-   ```
+## Game modes
+The following idiom game modes are short and sweet (think easy wordle length), and can only end in success.
+Each game also ends on an educational screen where users can learn more trivia about the idiom.
 
-2. Start the app
+### Idiom Swap
+Players try to identify the incorrect word in an idiom and 
 
-   ```bash
-    npx expo start
-   ```
+### Idiom Descramble
+Players try to identify an idiom from a jumble of words under a time limit.
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Data sources
+Data was scraped from Wiktionary:Idioms and theidioms.com with permission.
