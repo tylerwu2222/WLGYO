@@ -93,10 +93,10 @@ export default function RootLayout() {
                   presentation: 'modal',
                   headerShown: false
                 }} />
-              <Stack.Screen name="wlgyoGame1" options={{ title: "WLGYO screen 1", headerShown: false }} />
-              <Stack.Screen name="wlgyoGame2" options={{ headerShown: false }} />
-              <Stack.Screen name="wlgyoPostGame" options={{ headerShown: false }} />
-              <Stack.Screen name="archive" options={{ headerShown: false }} />
+              <Stack.Screen name="wlgyoGame1" options={{ title: "WLGYO 1", headerShown: false }} />
+              <Stack.Screen name="wlgyoGame2" options={{ title: "WLGYO 2", headerShown: false }} />
+              <Stack.Screen name="wlgyoPostGame" options={{ title: "WLGYO screen post game", headerShown: false }} />
+              <Stack.Screen name="collection" options={{ title: "Collection",headerShown: false }} />
             </Stack>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>

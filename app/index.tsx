@@ -67,7 +67,7 @@ export default function Index() {
           </TouchableOpacity>
         </Link>
         {/* archive button */}
-        <Link href='/archive' style={styles.btn} asChild>
+        <Link href='/collection' style={styles.btn} asChild>
           <TouchableOpacity>
             <Text style={styles.btnText}>Collection</Text>
           </TouchableOpacity>

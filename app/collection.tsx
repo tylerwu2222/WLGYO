@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, useColorScheme, StatusBar } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { subDays, format } from 'date-fns';
 import ArchivedGameSelector from '@/components/wlgyo/ArchivedGameSelector';
 import { useRouter } from 'expo-router';
@@ -11,14 +11,18 @@ import ThemedTitleText from '@/components/ThemedTitleText';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import SubscribeModal from '@/components/SubscribeModal';
+import Checkbox from '@/components/Checkbox';
+import RadioButton from '@/components/RadioButton';
+import RadioButtonGroup from '@/components/RadioButtonGroup';
 
-const archive = () => {
+const collection = () => {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const backgroundColor = Colors[colorScheme ?? 'light'].background;
     const subscribeModalRef = useRef<BottomSheetModal>(null);
     const isSubscribed = false;
-
+    const viewOptions = ['all', 'completed', 'favorites']
+    const [selectedViewOption, setSelectedViewOption] = useState<string>('all');
     // get all archived games, from today to origin
     const today = new Date();
     const allDays = Array.from({ length: 20 }, (_, i) =>
@@ -43,9 +47,19 @@ const archive = () => {
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={[styles.archiveView, { backgroundColor }]}>
+            <SafeAreaView style={[styles.collectionView, { backgroundColor }]}>
                 <SubscribeModal ref={subscribeModalRef} />
-                <ThemedTitleText style={styles.archiveTitle}>Collection</ThemedTitleText>
+                {/* title */}
+                <ThemedTitleText style={styles.collectionTitle}>Collection</ThemedTitleText>
+                {/* checkboxes */}
+                <View>
+                    <RadioButtonGroup
+                        options={viewOptions}
+                        selectedOption={selectedViewOption}
+                        setSelectedOption={setSelectedViewOption}
+                        orientation='horizontal'
+                    />
+                </View>
                 <FlatList
                     style={styles.flatListView}
                     data={daysData}
@@ -62,10 +76,10 @@ const archive = () => {
     )
 }
 
-export default archive
+export default collection;
 
 const styles = StyleSheet.create({
-    archiveView: {
+    collectionView: {
         flex: 1,
         marginTop: StatusBar.currentHeight || 0,
         justifyContent: 'center',
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
     flatListView: {
         width: '90%'
     },
-    archiveTitle: {
+    collectionTitle: {
         fontSize: 40
     }
 })
