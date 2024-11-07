@@ -10,7 +10,7 @@ Created main idiom dataset and created screen flow logic for Idiom Swap game mod
 https://github.com/user-attachments/assets/cdb99453-0007-4798-8dc5-0709687b9c29
 
 11/6/24:
-added definition + etymology carousel to end game screen, added locked content to collection screen, improved overall styling
+added definition + etymology carousel to end game screen, added locked content to collection screen, improved overall styling (and created a logo of a glass of orange juice, which I know realize looks like a vape)
 
 https://github.com/user-attachments/assets/d27f0a1a-a67d-4076-8aaf-f3d8dec5691c
 
@@ -21,7 +21,7 @@ The following idiom game modes are short and sweet (think easy wordle length), a
 Each game also ends on an educational screen where users can learn more trivia about the idiom.
 
 ### Idiom Swap
-Players try to identify the incorrect word in an idiom and 
+Players try to identify the incorrect word in an idiom and replace it with the correct word.
 
 ### Idiom Descramble
 Players try to identify an idiom from a jumble of words under a time limit.
