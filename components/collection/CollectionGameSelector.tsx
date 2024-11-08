@@ -1,18 +1,18 @@
 import { Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors';
-import ThemedText from '../ThemedText';
+import ThemedText from '../typography/ThemedText';
 
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-interface ArchivedGameSelectorProps {
+interface CollectionGameSelectorProps {
     date: string;
     isLocked?: boolean;
     onPressFn: () => void;
 }
 
 // styled archive game selector
-const ArchivedGameSelector = ({ date, isLocked = true, onPressFn = () => { } }: ArchivedGameSelectorProps) => {
+const CollectionGameSelector = ({ date, isLocked = true, onPressFn = () => { } }: CollectionGameSelectorProps) => {
     return (
         <View style={[styles.selector]}>
             <Pressable onPress={onPressFn} style={styles.selectorPressable}>
@@ -26,7 +26,7 @@ const ArchivedGameSelector = ({ date, isLocked = true, onPressFn = () => { } }: 
     )
 }
 
-export default ArchivedGameSelector
+export default CollectionGameSelector
 
 const styles = StyleSheet.create({
     selector: {

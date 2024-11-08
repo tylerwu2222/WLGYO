@@ -6,8 +6,8 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
-import ThemedText from '@/components/ThemedText';
-import ThemedTitleText from '@/components/ThemedTitleText';
+import ThemedText from '@/components/typography/ThemedText';
+import ThemedTitleText from '@/components/typography/ThemedTitleText';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import { defaultStyles } from '@/constants/Styles';

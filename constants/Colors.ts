@@ -40,7 +40,7 @@ export const Colors = {
     buttonText: '#472d00',
     buttonBackground: '#fff7e1',
 
-    background: '#73572b',
+    background: '#494030',
   },
 };
 

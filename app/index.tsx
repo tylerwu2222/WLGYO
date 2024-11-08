@@ -6,12 +6,12 @@ import Animated from "react-native-reanimated";
 
 import { Colors, buttonColors, textColors } from "@/constants/Colors";
 // import ThemedText from "@/components/ThemedText";
-import ThemedTitleText from "@/components/ThemedTitleText";
-import ThemedSubtitleText from "@/components/ThemedSubtitleText";
+import ThemedTitleText from "@/components/typography/ThemedTitleText";
+import ThemedSubtitleText from "@/components/typography/ThemedSubtitleText";
 import { useContext, useCallback, useEffect, useRef } from "react";
 import { IdiomContext } from "./_layout";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import SubscribeModal from "@/components/SubscribeModal";
+import SubscribeModal from "@/components/modals/SubscribeModal";
 import { useRoute } from "@react-navigation/native";
 
 

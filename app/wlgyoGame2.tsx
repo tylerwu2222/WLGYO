@@ -3,10 +3,10 @@ import React, { useState, useEffect, useContext, ReactNode } from 'react'
 import { IdiomContext } from './_layout';
 import { Link } from 'expo-router';
 
-import ThemedTitleText from '@/components/ThemedTitleText';
+import ThemedTitleText from '@/components/typography/ThemedTitleText';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
-import FloatingSwapView from '@/components/wlgyo/FloatingSwapView';
-import ThemedText from '@/components/ThemedText';
+import FloatingSwapView from '@/components/game_idiom_swap/FloatingSwapView';
+import ThemedText from '@/components/typography/ThemedText';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,7 +16,7 @@ import { useRouter } from 'expo-router';
 import Animated from 'react-native-reanimated';
 
 import * as Haptics from 'expo-haptics';
-import PartiallyBoldedText from '@/components/wlgyo/PartiallyBoldedText';
+import PartiallyBoldedText from '@/components/typography/PartiallyBoldedText';
 
 const instructionsText = ''
 const wlgyoGame2 = () => {

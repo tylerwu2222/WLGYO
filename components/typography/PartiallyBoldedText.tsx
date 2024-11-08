@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import SelectableWord from './SelectableWord';
-import ThemedText from '../ThemedText';
+import ThemedText from './ThemedText';
 
 
 interface PartiallyBoldedTextProps {

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, useColorScheme } from 'react-native'
-import ThemedText from '../ThemedText'
+import ThemedText from '../typography/ThemedText'
 import React, { useEffect } from 'react'
 import { Pressable } from 'react-native'
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'

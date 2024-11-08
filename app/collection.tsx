@@ -1,19 +1,17 @@
 import { StyleSheet, Text, View, useColorScheme, StatusBar } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { subDays, format } from 'date-fns';
-import ArchivedGameSelector from '@/components/wlgyo/ArchivedGameSelector';
+import CollectionGameSelector from '@/components/collection/CollectionGameSelector';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { FlatList } from 'react-native-gesture-handler';
 // import { FlashList } from '@shopify/flash-list';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import ThemedTitleText from '@/components/ThemedTitleText';
+import ThemedTitleText from '@/components/typography/ThemedTitleText';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import SubscribeModal from '@/components/SubscribeModal';
-import Checkbox from '@/components/Checkbox';
-import RadioButton from '@/components/RadioButton';
-import RadioButtonGroup from '@/components/RadioButtonGroup';
+import SubscribeModal from '@/components/modals/SubscribeModal';
+import RadioButtonGroup from '@/components/buttons/RadioButtonGroup';
 
 const collection = () => {
     const router = useRouter();
@@ -64,7 +62,7 @@ const collection = () => {
                     style={styles.flatListView}
                     data={daysData}
                     renderItem={({ item }) =>
-                        <ArchivedGameSelector
+                        <CollectionGameSelector
                             key={item.date}
                             date={item.date}
                             isLocked={item.date != format(today, 'MMM. dd, yyyy')}

@@ -3,13 +3,13 @@ import React, { useState, useEffect, useContext, ReactNode } from 'react'
 import { IdiomContext } from './_layout';
 // import { Link } from 'expo-router';
 
-import ThemedTitleText from '@/components/ThemedTitleText';
+import ThemedTitleText from '@/components/typography/ThemedTitleText';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SelectableIdiomText from '@/components/wlgyo/SelectableIdiomText';
+import SelectableIdiomText from '@/components/game_idiom_swap/SelectableIdiomText';
 
 import * as Haptics from 'expo-haptics';
 
