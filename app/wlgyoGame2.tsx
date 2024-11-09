@@ -24,7 +24,7 @@ const wlgyoGame2 = () => {
 
     const router = useRouter();
     // themed styles
-    const { backgroundColor } = useContext(ThemeContext);
+    const { tintTextColor, textColor, backgroundColor } = useContext(ThemeContext);
 
     const styles = StyleSheet.create({
         container: {
@@ -49,19 +49,16 @@ const wlgyoGame2 = () => {
         instruction: {
             fontSize: 20,
             fontFamily: 'Nunito_400Regular',
-            color: textColors.titleTextOrange
+            color: tintTextColor
         },
-        subtitle: {
-            fontSize: 20,
-            fontFamily: 'Nunito_300Light',
-            color: textColors.subtitleTextOrange
-        },
+        
         word: {
             fontSize: 30,
             lineHeight: 60,
             fontFamily: 'Nunito_300Light',
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            color: textColor
         },
         btn: {
             justifyContent: 'center',

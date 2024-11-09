@@ -20,7 +20,10 @@ const wlgyoGame1 = () => {
 
     const router = useRouter();
     // themed styles
-    const { backgroundColor } = useContext(ThemeContext);
+    const {
+        textColor,
+        tintTextColor,
+        backgroundColor } = useContext(ThemeContext);
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -39,17 +42,13 @@ const wlgyoGame1 = () => {
         instruction: {
             fontSize: 20,
             fontFamily: 'Nunito_400Regular',
-            color: textColors.titleTextOrange
-        },
-        subtitle: {
-            fontSize: 20,
-            fontFamily: 'Nunito_300Light',
-            color: textColors.subtitleTextOrange
+            color: tintTextColor
         },
         text: {
             fontSize: 20,
             fontFamily: 'Nunito_300Light',
-            textAlign: 'center'
+            textAlign: 'center',
+            color: textColor
         },
         btn: {
             justifyContent: 'center',
@@ -124,12 +123,14 @@ const wlgyoGame1 = () => {
                 {/* instructions */}
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
                 {/* selectable text */}
-                <SelectableIdiomText
-                    idiom={dailyIdiom.idiom_modified}
-                    keywords={swapWordChoices}
-                    selectedWord={selectedWord}
-                    setSelectedWord={setSelectedWord}
-                />
+                <Text style={styles.text}>
+                    <SelectableIdiomText
+                        idiom={dailyIdiom.idiom_modified}
+                        keywords={swapWordChoices}
+                        selectedWord={selectedWord}
+                        setSelectedWord={setSelectedWord}
+                    />
+                </Text>
 
                 {/* submit button */}
                 <TouchableOpacity
