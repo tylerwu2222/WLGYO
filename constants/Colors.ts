@@ -22,6 +22,7 @@ export const Colors = {
     buttonBackground: '#fff7e1',
 
     background: '#fffaeb',
+    highlight: '#dcd5bf',
   },
   dark: {
     text: '#ECEDEE',
@@ -41,6 +42,7 @@ export const Colors = {
     buttonBackground: '#fff7e1',
 
     background: '#494030',
+    highlight: '#938367'
   },
 };
 

@@ -14,13 +14,72 @@ import SelectableIdiomText from '@/components/game_idiom_swap/SelectableIdiomTex
 import * as Haptics from 'expo-haptics';
 
 import Animated from 'react-native-reanimated';
+import { ThemeContext } from '@/providers/ThemeProvider';
 
 const wlgyoGame1 = () => {
 
     const router = useRouter();
+    // themed styles
+    const { backgroundColor } = useContext(ThemeContext);
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            paddingHorizontal: 30,
+            paddingBottom: 20,
+            justifyContent: 'space-between', // justify = main axis: center vertically
+            gap: 40,
+            backgroundColor: backgroundColor
+        },
+        subContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 50
+        },
+        instruction: {
+            fontSize: 20,
+            fontFamily: 'Nunito_400Regular',
+            color: textColors.titleTextOrange
+        },
+        subtitle: {
+            fontSize: 20,
+            fontFamily: 'Nunito_300Light',
+            color: textColors.subtitleTextOrange
+        },
+        text: {
+            fontSize: 20,
+            fontFamily: 'Nunito_300Light',
+            textAlign: 'center'
+        },
+        btn: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+            backgroundColor: buttonColors.buttonLightOrange,
+            borderColor: buttonColors.buttonLightTextOrange,
+            borderWidth: 1,
+            width: '30%',
+            maxWidth: 200
+        },
+        btnText: {
+            padding: 14,
+            fontSize: 16,
+            fontWeight: 'semibold',
+            color: buttonColors.buttonLightTextOrange
+        },
+        primaryBtn: {
+            backgroundColor: Colors.light.buttonPrimaryBackgroundOrange,
+            borderColor: Colors.light.buttonPrimaryBackgroundOrange
+        },
+        primaryBtnText: {
+            color: buttonColors.buttonTextOrange
+        },
+        submitBtn: {
+            position: 'absolute',
+            bottom: 20
+        }
+    })
 
-    const colorScheme = useColorScheme();
-    const backgroundColor = Colors[colorScheme ?? 'light'].background;
     const instructionText = <Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>;
     const [selectedWord, setSelectedWord] = useState<string>('');
     const [swapWordChoices, setSwapWordChoices] = useState<string[]>([])
@@ -31,11 +90,6 @@ const wlgyoGame1 = () => {
     // console.log('daily idiom in screen 1', dailyIdiom);
 
     // STAGE 1 data
-    // change eventually to params
-    // const idiom = 'when life gives you oranges'
-    // const swapWordAnswer = 'oranges';
-    // const initialSwapWordChoices = ['life', 'oranges'];
-
     useEffect(() => {
         const choices = dailyIdiom.keywords.filter(w => w !== dailyIdiom.swapword).concat([dailyIdiom.swapword_incorrect])
         setSwapWordChoices(choices);
@@ -65,7 +119,7 @@ const wlgyoGame1 = () => {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor }]}>
+        <View style={[styles.container]}>
             <View style={styles.subContainer}>
                 {/* instructions */}
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
@@ -76,7 +130,7 @@ const wlgyoGame1 = () => {
                     selectedWord={selectedWord}
                     setSelectedWord={setSelectedWord}
                 />
-                
+
                 {/* submit button */}
                 <TouchableOpacity
                     onPress={() => {
@@ -93,61 +147,3 @@ const wlgyoGame1 = () => {
 }
 
 export default wlgyoGame1;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 30,
-        paddingBottom: 20,
-        justifyContent: 'space-between', // justify = main axis: center vertically
-        gap: 40
-    },
-    subContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 50
-    },
-    instruction: {
-        fontSize: 20,
-        fontFamily: 'Nunito_400Regular',
-        color: textColors.titleTextOrange
-    },
-    subtitle: {
-        fontSize: 20,
-        fontFamily: 'Nunito_300Light',
-        color: textColors.subtitleTextOrange
-    },
-    text: {
-        fontSize: 20,
-        fontFamily: 'Nunito_300Light',
-        textAlign: 'center'
-    },
-    btn: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        backgroundColor: buttonColors.buttonLightOrange,
-        borderColor: buttonColors.buttonLightTextOrange,
-        borderWidth: 1,
-        width: '30%',
-        maxWidth: 200
-    },
-    btnText: {
-        padding: 14,
-        fontSize: 16,
-        fontWeight: 'semibold',
-        color: buttonColors.buttonLightTextOrange
-    },
-    primaryBtn: {
-        backgroundColor: Colors.light.buttonPrimaryBackgroundOrange,
-        borderColor: Colors.light.buttonPrimaryBackgroundOrange
-    },
-    primaryBtnText: {
-        color: buttonColors.buttonTextOrange
-    },
-    submitBtn: {
-        position: 'absolute',
-        bottom: 20
-    }
-})

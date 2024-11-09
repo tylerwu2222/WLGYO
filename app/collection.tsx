@@ -11,16 +11,22 @@ import ThemedTitleText from '@/components/typography/ThemedTitleText';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import SubscribeModal from '@/components/modals/SubscribeModal';
-import RadioButtonGroup from '@/components/buttons/RadioButtonGroup';
+import RadioButtonGroup from '@/components/inputs/buttons/RadioButtonGroup';
 
 const collection = () => {
+    // hooks
     const router = useRouter();
     const colorScheme = useColorScheme();
     const backgroundColor = Colors[colorScheme ?? 'light'].background;
+    
+    // subscribe modal
     const subscribeModalRef = useRef<BottomSheetModal>(null);
     const isSubscribed = false;
+
+    // radio button
     const viewOptions = ['all', 'completed', 'favorites']
     const [selectedViewOption, setSelectedViewOption] = useState<string>('all');
+
     // get all archived games, from today to origin
     const today = new Date();
     const allDays = Array.from({ length: 20 }, (_, i) =>

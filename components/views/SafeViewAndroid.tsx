@@ -1,13 +1,14 @@
 import { Colors } from "@/constants/Colors";
-import { ReactNode } from "react";
+import { ThemeContext } from "@/providers/ThemeProvider";
+import { ReactNode, useContext } from "react";
 import { StyleSheet, Platform, StatusBar, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const SafeViewAndroid = ({ children }: { children: ReactNode }) => {
 
-    const colorScheme = useColorScheme();
-    const backgroundColor = Colors[colorScheme ?? 'light'].background;
+    const { backgroundColor } = useContext(ThemeContext);
+
     const styles = StyleSheet.create({
         AndroidSafeArea: {
             flex: 1,

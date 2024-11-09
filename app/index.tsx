@@ -1,30 +1,52 @@
-import { Text, View, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
-import Icon from '@/assets/images/oj-icon.svg';
-import { Link } from "expo-router";
-import { format } from 'date-fns';
-import Animated from "react-native-reanimated";
 
-import { Colors, buttonColors, textColors } from "@/constants/Colors";
-// import ThemedText from "@/components/ThemedText";
-import ThemedTitleText from "@/components/typography/ThemedTitleText";
-import ThemedSubtitleText from "@/components/typography/ThemedSubtitleText";
-import { useContext, useCallback, useEffect, useRef } from "react";
+// react
+import { useContext, useCallback, useState, useEffect, useRef } from "react";
+import { Text, View, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
+
+// context
 import { IdiomContext } from "./_layout";
+
+// navigation
+import { Link } from "expo-router";
+import { ThemeProvider, useRoute } from "@react-navigation/native";
+
+// components
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SubscribeModal from "@/components/modals/SubscribeModal";
-import { useRoute } from "@react-navigation/native";
+// import ToggleSwitch from "@/components/inputs/switches/ToggleSwitch";
 
+// date format
+import { format } from 'date-fns';
 
+// assets
+import Icon from '@/assets/images/oj-icon.svg';
+
+// styles
+import { Colors, buttonColors, textColors } from "@/constants/Colors";
+import ThemedTitleText from "@/components/typography/ThemedTitleText";
+import ThemedSubtitleText from "@/components/typography/ThemedSubtitleText";
+import { ThemeContext } from "@/providers/ThemeProvider";
 
 export default function Index() {
-  const colorScheme = useColorScheme();
-  const backgroundColor = Colors[colorScheme ?? 'light'].background;
-  const textColor = Colors[colorScheme ?? 'light'].text;
-  const subscribeModalRef = useRef<BottomSheetModal>(null);
+
+  // idiom data
   const {
     fetchDailyIdiom,
-    dailyIdiom
+    dailyIdiom,
+    theme
   } = useContext(IdiomContext);
+
+
+  // styled
+  const {
+    backgroundColor,
+    textColor
+  } = useContext(ThemeContext);
+
+  // subscribe
+  const subscribeModalRef = useRef<BottomSheetModal>(null);
+
+  // routing
   const route = useRoute();
   const isLoggedIn = false;
 
@@ -84,7 +106,10 @@ export default function Index() {
           <Text style={styles.btnText}>Settings</Text>
         </TouchableOpacity> */}
       </View>
-
+      {/* <ToggleSwitch isSwitchOn={darkModeOn}
+        onSwitchFn={() => {
+          setDarkModeOn(!darkModeOn)
+        }} /> */}
       {/* footer info */}
       <View style={styles.footer}>
         <Text style={styles.footerDate}>{format(new Date(), 'MMM. d, yyyy')}</Text>

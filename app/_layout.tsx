@@ -11,24 +11,28 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import './gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PaperProvider } from 'react-native-paper';
-
+import ThemeProvider from '@/providers/ThemeProvider';
 
 // navigation
 import { Stack } from "expo-router";
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+// import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 
 // functions
 import { fetchRandomIdiom } from "@/api/routes/idioms";
 
 // view/header components
 import SafeViewAndroid from '@/components/views/SafeViewAndroid';
-import OptionsHeader from '@/components/views/OptionsHeader';
+import SideDrawerMenu from '@/components/menus/SideDrawerMenu';
+import MenuHeader from '@/components/headers/MenuHeader';
 
 // fonts
 import { useFonts, Nunito_400Regular, Nunito_300Light } from '@expo-google-fonts/nunito';
 
 // types
 import { dailyIdiomType } from "@/types/data";
+
+// storage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // remove later
 import { LogBox } from 'react-native';
@@ -37,24 +41,60 @@ LogBox.ignoreAllLogs();
 
 SplashScreen.preventAutoHideAsync();
 
+type themeString = 'light' | 'dark';
+
 interface IdiomContextProps {
     dailyIdiom: dailyIdiomType;
     setDailyIdiom: Dispatch<SetStateAction<dailyIdiomType>>;
     fetchDailyIdiom: () => Promise<void>;
-    sideMenuVisible: boolean,
-    setSideMenuVisible: Dispatch<SetStateAction<boolean>>,
+    sideMenuVisible: boolean;
+    setSideMenuVisible: Dispatch<SetStateAction<boolean>>;
+    theme: themeString;
+    setTheme: Dispatch<SetStateAction<themeString>>;
 }
+
 
 export const IdiomContext = createContext({} as IdiomContextProps);
 
 export default function RootLayout() {
-
+    // global theme state
     const colorScheme = useColorScheme();
+    const [theme, setTheme] = useState<themeString>('light');
+
+    // Load the theme preference from AsyncStorage on app start, if DNE, default to colorscheme
+    useEffect(() => {
+        const loadTheme = async () => {
+            try {
+                const storedTheme = await AsyncStorage.getItem('theme') as themeString;
+                if (storedTheme) {
+                    setTheme(storedTheme);
+                } else {
+                    setTheme(colorScheme as themeString);
+                }
+            } catch (error) {
+                console.log('Error loading theme from AsyncStorage', error);
+            }
+        };
+        loadTheme();
+    }, [colorScheme]);
+
+    // side menu state
     const [sideMenuVisible, setSideMenuVisible] = useState<boolean>(false);
+
+    // fonts
     let [fontsLoaded] = useFonts({
         Nunito_300Light,
         Nunito_400Regular
     })
+
+    useEffect(() => {
+        // only hide (proceed) from splash screen after fonts loaded
+        if (fontsLoaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    // idiom data
     const [dailyIdiom, setDailyIdiom] = useState<dailyIdiomType>({
         idiom: '',
         idiom_modified: '',
@@ -68,7 +108,6 @@ export default function RootLayout() {
         swapword_distractors: []
     });
 
-    // 
     const fetchDailyIdiom = async () => {
         // get random idiom for now to test variety of data
         const res = await fetchRandomIdiom();
@@ -76,36 +115,33 @@ export default function RootLayout() {
         // console.log('fetched random idiom FE', res)
     };
 
-    useEffect(() => {
-        // only hide (proceed) from splash screen after fonts loaded
-        if (fontsLoaded) {
-            SplashScreen.hideAsync();
-        }
-    }, [fontsLoaded]);
-
-
+    // dont render if no fonts
     if (!fontsLoaded) {
         return null;
     }
 
     return (
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <IdiomContext.Provider
-                value={{
-                    dailyIdiom,
-                    setDailyIdiom,
-                    fetchDailyIdiom,
-                    sideMenuVisible,
-                    setSideMenuVisible
-                }}
-            >
+        // 
+        <IdiomContext.Provider
+            value={{
+                dailyIdiom,
+                setDailyIdiom,
+                fetchDailyIdiom,
+                sideMenuVisible,
+                setSideMenuVisible,
+                theme,
+                setTheme
+            }}
+        >
+            <ThemeProvider>
                 <GestureHandlerRootView style={{ flex: 1 }}>
                     <PaperProvider>
                         <BottomSheetModalProvider>
                             <SafeViewAndroid>
+                                <SideDrawerMenu />
                                 <Stack
                                     screenOptions={{
-                                        header: () => <OptionsHeader />, // Use the custom header globally
+                                        header: () => <MenuHeader />, // Use the custom header globally
                                     }}
                                 >
                                     <Stack.Screen
@@ -131,7 +167,7 @@ export default function RootLayout() {
                         </BottomSheetModalProvider>
                     </PaperProvider>
                 </GestureHandlerRootView>
-            </IdiomContext.Provider>
-        </ThemeProvider>
+            </ThemeProvider>
+        </IdiomContext.Provider>
     );
 }

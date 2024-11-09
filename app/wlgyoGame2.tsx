@@ -17,14 +17,76 @@ import Animated from 'react-native-reanimated';
 
 import * as Haptics from 'expo-haptics';
 import PartiallyBoldedText from '@/components/typography/PartiallyBoldedText';
+import { ThemeContext } from '@/providers/ThemeProvider';
 
 const instructionsText = ''
 const wlgyoGame2 = () => {
 
     const router = useRouter();
+    // themed styles
+    const { backgroundColor } = useContext(ThemeContext);
 
-    const colorScheme = useColorScheme();
-    const backgroundColor = Colors[colorScheme ?? 'light'].background;
+    const styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            paddingHorizontal: 30,
+            paddingTop: 100,
+            backgroundColor: backgroundColor
+        },
+        subContainer: {
+            flex: 1,
+            flexDirection: 'column',
+            // justifyContent: 'center',
+            alignItems: 'center', // center horizontally (along main axis)
+            gap: 50
+        },
+        idiomContainer: {
+            flexWrap: 'wrap',
+            lineHeight: 60
+        },
+        instruction: {
+            fontSize: 20,
+            fontFamily: 'Nunito_400Regular',
+            color: textColors.titleTextOrange
+        },
+        subtitle: {
+            fontSize: 20,
+            fontFamily: 'Nunito_300Light',
+            color: textColors.subtitleTextOrange
+        },
+        word: {
+            fontSize: 30,
+            lineHeight: 60,
+            fontFamily: 'Nunito_300Light',
+            display: 'flex',
+            justifyContent: 'center'
+        },
+        btn: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+            backgroundColor: buttonColors.buttonLightOrange,
+            borderColor: buttonColors.buttonLightTextOrange,
+            borderWidth: 1,
+            width: '30%',
+            maxWidth: 200
+        },
+        btnText: {
+            padding: 14,
+            fontSize: 16,
+            fontWeight: 'semibold',
+            color: buttonColors.buttonLightTextOrange
+        },
+        primaryBtn: {
+            backgroundColor: buttonColors.buttonOrange,
+            borderColor: buttonColors.buttonOrange
+        },
+        primaryBtnText: {
+            color: buttonColors.buttonTextOrange
+        },
+    })
 
     const [instructionText, setInstructionText] = useState<ReactNode>(<Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>);
     const [selectedWord, setSelectedWord] = useState<string>('');
@@ -81,7 +143,7 @@ const wlgyoGame2 = () => {
     }, [selectedWord]);
 
     return (
-        <View style={[styles.container, { backgroundColor }]}>
+        <View style={[styles.container]}>
             <View style={styles.subContainer}>
                 {/* instructions */}
                 <ThemedTitleText style={styles.instruction}>{instructionText}</ThemedTitleText>
@@ -106,67 +168,3 @@ const wlgyoGame2 = () => {
 }
 
 export default wlgyoGame2;
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        paddingHorizontal: 30,
-        paddingTop: 100,
-        // paddingBottom: 20,
-        // justifyContent: 'space-between',
-        // gap: 40
-    },
-    subContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        // justifyContent: 'center',
-        alignItems: 'center', // center horizontally (along main axis)
-        gap: 50
-    },
-    idiomContainer: {
-        flexWrap: 'wrap',
-        lineHeight: 60
-    },
-    instruction: {
-        fontSize: 20,
-        fontFamily: 'Nunito_400Regular',
-        color: textColors.titleTextOrange
-    },
-    subtitle: {
-        fontSize: 20,
-        fontFamily: 'Nunito_300Light',
-        color: textColors.subtitleTextOrange
-    },
-    word: {
-        fontSize: 30,
-        lineHeight: 60,
-        fontFamily: 'Nunito_300Light',
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    btn: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        backgroundColor: buttonColors.buttonLightOrange,
-        borderColor: buttonColors.buttonLightTextOrange,
-        borderWidth: 1,
-        width: '30%',
-        maxWidth: 200
-    },
-    btnText: {
-        padding: 14,
-        fontSize: 16,
-        fontWeight: 'semibold',
-        color: buttonColors.buttonLightTextOrange
-    },
-    primaryBtn: {
-        backgroundColor: buttonColors.buttonOrange,
-        borderColor: buttonColors.buttonOrange
-    },
-    primaryBtnText: {
-        color: buttonColors.buttonTextOrange
-    },
-})
