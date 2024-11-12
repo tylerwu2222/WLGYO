@@ -1,32 +1,37 @@
+// react
 import { StyleSheet, Text, View, TouchableOpacity, useColorScheme, Dimensions } from 'react-native'
 import React, { useContext } from 'react'
-import { IdiomContext } from './_layout';
-import { useNavigation, Link, useRouter } from 'expo-router';
-import { useIsFocused } from '@react-navigation/native';
 
+// context
+import { IdiomContext } from './_layout';
+
+// navigation
+import { Link } from 'expo-router';
+// import { useIsFocused } from '@react-navigation/native';
+
+// views
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import Carousel, { Pagination } from 'react-native-reanimated-carousel';
+
+// styles
+import { defaultStyles } from '@/constants/Styles';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
 import ThemedText from '@/components/typography/ThemedText';
 import ThemedTitleText from '@/components/typography/ThemedTitleText';
-import { useSharedValue } from 'react-native-reanimated';
-import Carousel, { Pagination } from 'react-native-reanimated-carousel';
-import { defaultStyles } from '@/constants/Styles';
-import { ScrollView } from 'react-native-gesture-handler';
 
-interface carouselCard {
-  header: string,
-  content: string
-}
+// animation
+import { useSharedValue } from 'react-native-reanimated';
+
+// types
+import { carouselCard } from '@/types/components';
+import { ThemeContext } from '@/providers/ThemeProvider';
 
 const wlgyo_postgame = () => {
 
-  const colorScheme = useColorScheme();
-  const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const {
     dailyIdiom
   } = useContext(IdiomContext);
-  // const navigation = useNavigation();
-  // const router = useRouter();
+
   const screenWidth = Dimensions.get('window').width;
   const progress = useSharedValue(0);
   // create idiom meaning/etymology data for carousel
@@ -43,9 +48,96 @@ const wlgyo_postgame = () => {
     })
   }
 
+  // themed styles
+  const { backgroundColor } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1, // take up all space
+      // height: '100%',
+      paddingHorizontal: 30,
+      paddingVertical: 100,
+      alignItems: 'center',
+      justifyContent: 'center', // justify = main axis: center vertically
+      backgroundColor: backgroundColor,
+      gap: 20
+    },
+    // topContainer: {
+    //   display: 'flex',
+    //   flex: 1,
+    //   justifyContent: 'space-between',
+    // },
+    subContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 5
+    },
+    instruction: {
+      fontSize: 20,
+      fontFamily: 'Nunito_400Regular',
+      color: textColors.titleTextOrange
+    },
+    subtitle: {
+      fontSize: 20,
+      fontFamily: 'Nunito_300Light',
+      color: textColors.subtitleTextOrange
+    },
+    word: {
+      fontSize: 30,
+      fontWeight: 'bold',
+      lineHeight: 40,
+      fontFamily: 'Nunito_300Light',
+      display: 'flex',
+      justifyContent: 'center'
+    },
+    carouselCard: {
+      flex: 1,
+      // minHeight: 100,
+      // height: '100%',
+      padding: 30,
+      margin: 30,
+      backgroundColor: Colors.dark.buttonBackground,
+      borderRadius: 10,
+      justifyContent: 'center'
+    },
+    carouselText: {
+      fontSize: 25,
+      fontStyle: 'italic',
+      color: Colors.dark.buttonText
+    },
+    carouselHeader: {
+      fontSize: 35,
+      fontWeight: 'bold',
+      color: Colors.dark.buttonText
+    },
+    btn: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      backgroundColor: buttonColors.buttonLightOrange,
+      borderColor: buttonColors.buttonLightTextOrange,
+      borderWidth: 1,
+      width: '30%',
+      maxWidth: 200
+    },
+    btnText: {
+      padding: 14,
+      fontSize: 18,
+      fontWeight: 'semibold',
+      color: buttonColors.buttonLightTextOrange
+    },
+    dotContainer: { gap: 5, marginBottom: 10 },
+    dotStyle: { backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 },
+  })
+
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={[styles.container, { backgroundColor }]}>
+      <SafeAreaView style={styles.container}>
         {/* <View style={styles.topContainer}>
         </View> */}
         <View style={styles.subContainer}>
@@ -108,86 +200,3 @@ const wlgyo_postgame = () => {
 }
 
 export default wlgyo_postgame;
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1, // take up all space
-    // height: '100%',
-    paddingHorizontal: 30,
-    paddingVertical: 100,
-    alignItems: 'center',
-    justifyContent: 'center', // justify = main axis: center vertically
-    gap: 20
-  },
-  // topContainer: {
-  //   display: 'flex',
-  //   flex: 1,
-  //   justifyContent: 'space-between',
-  // },
-  subContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 5
-  },
-  instruction: {
-    fontSize: 20,
-    fontFamily: 'Nunito_400Regular',
-    color: textColors.titleTextOrange
-  },
-  subtitle: {
-    fontSize: 20,
-    fontFamily: 'Nunito_300Light',
-    color: textColors.subtitleTextOrange
-  },
-  word: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    lineHeight: 40,
-    fontFamily: 'Nunito_300Light',
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  carouselCard: {
-    flex: 1,
-    // minHeight: 100,
-    // height: '100%',
-    padding: 30,
-    margin: 30,
-    backgroundColor: Colors.dark.buttonBackground,
-    borderRadius: 10,
-    justifyContent: 'center'
-  },
-  carouselText: {
-    fontSize: 25,
-    fontStyle: 'italic',
-    color: Colors.dark.buttonText
-  },
-  carouselHeader: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    color: Colors.dark.buttonText
-  },
-  btn: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: buttonColors.buttonLightOrange,
-    borderColor: buttonColors.buttonLightTextOrange,
-    borderWidth: 1,
-    width: '30%',
-    maxWidth: 200
-  },
-  btnText: {
-    padding: 14,
-    fontSize: 18,
-    fontWeight: 'semibold',
-    color: buttonColors.buttonLightTextOrange
-  },
-  dotContainer: { gap: 5, marginBottom: 10 },
-  dotStyle: { backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 },
-})

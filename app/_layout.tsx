@@ -122,20 +122,21 @@ export default function RootLayout() {
 
     return (
         // 
-        <IdiomContext.Provider
-            value={{
-                dailyIdiom,
-                setDailyIdiom,
-                fetchDailyIdiom,
-                sideMenuVisible,
-                setSideMenuVisible,
-                theme,
-                setTheme
-            }}
-        >
-            <ThemeProvider>
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                    <PaperProvider>
+        <PaperProvider>
+            <IdiomContext.Provider
+                value={{
+                    dailyIdiom,
+                    setDailyIdiom,
+                    fetchDailyIdiom,
+                    sideMenuVisible,
+                    setSideMenuVisible,
+                    theme,
+                    setTheme
+                }}
+            >
+                <ThemeProvider>
+                    <GestureHandlerRootView style={{ flex: 1 }}>
+
                         <BottomSheetModalProvider>
                             <SafeViewAndroid>
                                 <SideDrawerMenu />
@@ -157,17 +158,43 @@ export default function RootLayout() {
                                             presentation: 'modal',
                                             headerShown: false
                                         }} />
-                                    <Stack.Screen name="wlgyoGame1" options={{ title: "WLGYO 1", headerShown: false }} />
-                                    <Stack.Screen name="wlgyoGame2" options={{ title: "WLGYO 2", headerShown: false }} />
-                                    <Stack.Screen name="wlgyoPostGame" options={{ title: "WLGYO screen post game", headerShown: false }} />
-                                    <Stack.Screen name="collection" options={{ title: "Collection", headerShown: false }} />
+                                    <Stack.Screen
+                                        name="wlgyoGame1"
+                                        options={{
+                                            title: "WLGYO 1",
+                                            headerShown: false
+                                        }} />
+                                    <Stack.Screen
+                                        name="wlgyoGame2"
+                                        options={{
+                                            title: "WLGYO 2",
+                                            headerShown: false
+                                        }} />
+                                    <Stack.Screen
+                                        name="wlgyoPostGame"
+                                        options={{
+                                            title: "WLGYO screen post game",
+                                            headerShown: false
+                                        }} />
+                                    <Stack.Screen
+                                        name="collection"
+                                        options={{
+                                            title: "Collection",
+                                            headerShown: false
+                                        }} />
+                                    <Stack.Screen
+                                        name="subscribe"
+                                        options={{
+                                            title: "Subscribe",
+                                            headerShown: false
+                                        }} />
                                     {/* <Stack.Screen name="settings" options={{ title: "Collection",headerShown: false }} /> */}
                                 </Stack>
                             </SafeViewAndroid>
                         </BottomSheetModalProvider>
-                    </PaperProvider>
-                </GestureHandlerRootView>
-            </ThemeProvider>
-        </IdiomContext.Provider>
+                    </GestureHandlerRootView>
+                </ThemeProvider>
+            </IdiomContext.Provider>
+        </PaperProvider>
     );
 }

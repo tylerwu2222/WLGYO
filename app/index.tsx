@@ -99,7 +99,7 @@ export default function Index() {
             onPress={handleShowSubscribeModal}
             style={styles.btn}
           >
-            <Text style={styles.btnText}>Subscribe</Text>
+            <Text style={styles.btnText}>{'Sign up'}</Text>
           </TouchableOpacity>
         }
         {/* <TouchableOpacity style={styles.btn}>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     flex: 1, // default column for 
     paddingTop: 200,
     paddingBottom: 20,
-    justifyContent: 'space-between', // justify = main axis: center vertically
+    justifyContent: 'space-between', // justify = main axis: space vertically
     gap: 40
   },
   header: {
