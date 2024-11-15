@@ -10,6 +10,10 @@ import { IdiomContext } from "./_layout";
 import { Link } from "expo-router";
 import { ThemeProvider, useRoute } from "@react-navigation/native";
 
+// session
+// import { supabase } from "@/lib/supabase";
+// import { Session } from "@supabase/supabase-js";
+
 // components
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SubscribeModal from "@/components/modals/SubscribeModal";
@@ -27,28 +31,30 @@ import ThemedTitleText from "@/components/typography/ThemedTitleText";
 import ThemedSubtitleText from "@/components/typography/ThemedSubtitleText";
 import { ThemeContext } from "@/providers/ThemeProvider";
 
+
 export default function Index() {
 
   // idiom data
   const {
     fetchDailyIdiom,
     dailyIdiom,
+    isLoggedIn,
+    session,
+    setSession,
     theme
   } = useContext(IdiomContext);
 
-
-  // styled
+  // styles
   const {
     backgroundColor,
-    textColor
+    // textColor
   } = useContext(ThemeContext);
 
-  // subscribe
+  // subscribe modal
   const subscribeModalRef = useRef<BottomSheetModal>(null);
 
   // routing
   const route = useRoute();
-  const isLoggedIn = false;
 
   const handleShowSubscribeModal = () => {
     subscribeModalRef.current?.present();
@@ -62,6 +68,9 @@ export default function Index() {
       fetchDailyIdiom();
     }
   }, [route]);
+
+
+
 
   return (
     <View

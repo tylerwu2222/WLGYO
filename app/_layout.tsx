@@ -17,6 +17,10 @@ import ThemeProvider from '@/providers/ThemeProvider';
 import { Stack } from "expo-router";
 // import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 
+// session
+import { Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
+
 // functions
 import { fetchRandomIdiom } from "@/api/routes/idioms";
 
@@ -49,6 +53,10 @@ interface IdiomContextProps {
     fetchDailyIdiom: () => Promise<void>;
     sideMenuVisible: boolean;
     setSideMenuVisible: Dispatch<SetStateAction<boolean>>;
+    isLoggedIn: boolean;
+    setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+    session: Session | null;
+    setSession: Dispatch<SetStateAction<Session | null>>;
     theme: themeString;
     setTheme: Dispatch<SetStateAction<themeString>>;
 }
@@ -80,6 +88,34 @@ export default function RootLayout() {
 
     // side menu state
     const [sideMenuVisible, setSideMenuVisible] = useState<boolean>(false);
+    // session
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [session, setSession] = useState<Session | null>(null)
+
+    // check for session on index load
+    useEffect(() => {
+        // get session defined or undefined
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session)
+        })
+
+        // reset session when change auth/user
+        supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+        })
+        console.log('session set', session);
+    }, [])
+
+    // update login status when session changes
+    useEffect(() => {
+        console.log('session for is logged in',session);
+        if (session) {
+            setIsLoggedIn(true);
+        }
+        else {
+            setIsLoggedIn(false);
+        }
+    }, [session]);
 
     // fonts
     let [fontsLoaded] = useFonts({
@@ -130,6 +166,10 @@ export default function RootLayout() {
                     fetchDailyIdiom,
                     sideMenuVisible,
                     setSideMenuVisible,
+                    isLoggedIn,
+                    setIsLoggedIn,
+                    session,
+                    setSession,
                     theme,
                     setTheme
                 }}
@@ -142,7 +182,7 @@ export default function RootLayout() {
                                 <SideDrawerMenu />
                                 <Stack
                                     screenOptions={{
-                                        header: () => <MenuHeader />, // Use the custom header globally
+                                        header: () => <MenuHeader />, // Use the menu header globally
                                     }}
                                 >
                                     <Stack.Screen
@@ -159,28 +199,35 @@ export default function RootLayout() {
                                             headerShown: false
                                         }} />
                                     <Stack.Screen
+                                        name="resetPassword"
+                                        options={{
+                                            title: "Reset Password",
+                                            presentation: 'modal',
+                                            headerShown: false
+                                        }} />
+                                    <Stack.Screen
                                         name="wlgyoGame1"
                                         options={{
                                             title: "WLGYO 1",
-                                            headerShown: false
+                                            // headerShown: false
                                         }} />
                                     <Stack.Screen
                                         name="wlgyoGame2"
                                         options={{
                                             title: "WLGYO 2",
-                                            headerShown: false
+                                            // headerShown: false
                                         }} />
                                     <Stack.Screen
                                         name="wlgyoPostGame"
                                         options={{
                                             title: "WLGYO screen post game",
-                                            headerShown: false
+                                            // headerShown: false
                                         }} />
                                     <Stack.Screen
                                         name="collection"
                                         options={{
                                             title: "Collection",
-                                            headerShown: false
+                                            // headerShown: false
                                         }} />
                                     <Stack.Screen
                                         name="subscribe"

@@ -7,6 +7,7 @@ interface ThemeContextProps {
     backgroundColor: string;
     textColor: string;
     tintTextColor: string;
+    errorTextColor: string;
     textHighlightColor: string;
 }
 
@@ -20,6 +21,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const backgroundColor = Colors[theme ?? 'light'].background;
     const textColor = Colors[theme ?? 'light'].text;
     const tintTextColor = Colors[theme ?? 'light'].titleTextOrange;
+    const errorTextColor = Colors[theme ?? 'light'].errorText;
     const textHighlightColor = Colors[theme ?? 'light'].highlight;
 
     return (
@@ -28,6 +30,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
                 backgroundColor,
                 textColor,
                 tintTextColor,
+                errorTextColor,
                 textHighlightColor
             }}
         >

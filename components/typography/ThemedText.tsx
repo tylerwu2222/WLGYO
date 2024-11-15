@@ -1,13 +1,12 @@
-import { Colors } from '@/constants/Colors';
+import { ThemeContext } from '@/providers/ThemeProvider';
+import { useContext } from 'react';
 import { Text, TextProps, useColorScheme } from 'react-native';
 
 const ThemedText = ({ style, children, ...rest }: TextProps) => {
+  const { textColor } = useContext(ThemeContext);
   const colorScheme = useColorScheme();
-  // console.log('color scheme in themedText', colorScheme);
-  const color = Colors[colorScheme === 'dark' ? 'dark' : 'light'].text;
-
   return (
-    <Text style={[{ color }, style]} {...rest}>
+    <Text style={[{ color: textColor }, style]} {...rest}>
       {children}
     </Text>
   );

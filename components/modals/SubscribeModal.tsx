@@ -78,7 +78,9 @@ const SubscribeModal = forwardRef<Ref>((props, ref) => {
             handleComponent={null}>
             <View style={styles.modalBtns}>
                 <Link href={'/login'} asChild>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => dismiss()}
+                    >
                         <Text style={styles.textBtn}>LOG IN</Text>
                     </TouchableOpacity>
                 </Link>

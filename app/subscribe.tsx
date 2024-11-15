@@ -3,9 +3,9 @@ import React, { useState, useContext } from 'react'
 import { ThemeContext } from '@/providers/ThemeProvider';
 
 // components
-import { Button } from 'react-native-paper';
 import ThemedTextInput from '@/components/inputs/text/ThemedTextInput';
 import ThemedTitleText from '@/components/typography/ThemedTitleText';
+import { Modal, Portal, Text, Button } from 'react-native-paper';
 
 // auth
 import { supabase } from '@/lib/supabase';
@@ -24,34 +24,69 @@ const subscribe = (
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [emailAlertVisible, setEmailAlertVisible] = useState<boolean>(false);
+  const [credentialErrors, setCredentialErrors] = useState<string[]>([]);
+  const [credentialErrorsVisible, setCredentialErrorsVisible] = useState<boolean>(false);
 
-  async function signUpNewUser(email: string, password: string) {
+  const showModal = () => setEmailAlertVisible(true);
+  const hideModal = () => setEmailAlertVisible(false);
+
+
+  const signUpNewUser = async (email: string, password: string) => {
     console.log('signing up', email, password);
 
     setLoading(true)
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        emailRedirectTo: ''
-      }
-    })
+    // const {
+    //   data: { session },
+    //   error,
+    // } = await supabase.auth.signUp({
+    //   email: email,
+    //   password: password,
+    //   options: {
+    //     emailRedirectTo: ''
+    //   }
+    // })
 
     // show alert to check email:
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your email: ' + email + ' for email verification! Then come back here to sign in')
+    // if (error) Alert.alert(error.message)
+    // if (!session) 
+    setEmailAlertVisible(true);
     setLoading(false)
 
     // console.log('session returned', session); // null
     // navigate back to home
-    router.navigate('/');
+    // router.navigate('/');
 
   }
 
-  async function signUpWithEmail() {
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+  const isValidPassword = (password: string) => {
+    return password.length >= 6;
+  }
+
+  // check that email and password are valid
+  const handleNewUser = async (email: string, password: string) => {
+    setCredentialErrors([]); // reset errors on each sign up press
+    // sign up if valid
+    if (isValidEmail(email) && isValidPassword(password)) {
+      await signUpNewUser(email, password);
+      setCredentialErrorsVisible(false);
+    }
+    // else
+    if (!isValidEmail(email)) {
+      // show email error message
+      setCredentialErrors(errors => [...errors, "That isn't a valid email address"])
+      setCredentialErrorsVisible(true);
+    }
+    // check password
+    if (!isValidPassword(password)) {
+      // show pw length message
+      setCredentialErrors(errors => [...errors, "Password must be at least 8 characters"])
+      setCredentialErrorsVisible(true);
+    }
 
   }
 
@@ -60,6 +95,7 @@ const subscribe = (
     textHighlightColor,
     tintTextColor
   } = useContext(ThemeContext);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1, // take up all space
@@ -82,11 +118,22 @@ const subscribe = (
       paddingTop: 4,
       paddingBottom: 4,
       alignSelf: 'stretch',
+    },
+    emailAlert: {
+      padding: 20,
+      backgroundColor: backgroundColor,
+      shadowColor: 'black'
     }
   })
 
   return (
     <View style={styles.container}>
+      {/* email notif */}
+      <Portal>
+        <Modal visible={emailAlertVisible} onDismiss={hideModal} contentContainerStyle={styles.emailAlert}>
+          <Text>Check your email: {email} to activate your account.</Text>
+        </Modal>
+      </Portal>
       {/* info */}
       <View>
         <ThemedTitleText style={styles.header}>Sign up</ThemedTitleText>

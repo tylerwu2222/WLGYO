@@ -6,6 +6,7 @@
 export const Colors = {
   light: {
     text: '#11181C',
+    errorText: '#ff4f09',
     titleTextOrange: '#ffa509',
     subtitleTextOrange: '#ffc764',
     bodyText: '#472d00',
@@ -26,6 +27,7 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
+    errorText: '#ff4f09',
     titleTextOrange: '#ffa509',
     subtitleTextOrange: '#ffc764',
     bodyText: '#ECEDEE',
