@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
 import React, { useState, useEffect, useContext, ReactNode } from 'react'
 import { IdiomContext } from './_layout';
-import { Link } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 
 import ThemedTitleText from '@/components/typography/ThemedTitleText';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
@@ -88,9 +88,11 @@ const wlgyoGame2 = () => {
     const [instructionText, setInstructionText] = useState<ReactNode>(<Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>);
     const [selectedWord, setSelectedWord] = useState<string>('');
     const [swapWordChoices, setSwapWordChoices] = useState<string[]>([]);
-    const {
-        dailyIdiom
-    } = useContext(IdiomContext);
+
+    // daily or random idiom
+    const { idiom_string } = useLocalSearchParams();
+    // console.log('idiom string in w2', idiom_string);
+    const idiomData = JSON.parse(idiom_string as string);
 
     // STAGE 2
     // get idiom data
@@ -99,11 +101,11 @@ const wlgyoGame2 = () => {
 
     const initializeStage2 = () => {
         // update instructions
-        setInstructionText(<Text>Select the correct word to replace <Text style={{ fontWeight: '900' }}>{dailyIdiom.swapword_incorrect}</Text></Text>)
+        setInstructionText(<Text>Select the correct word to replace <Text style={{ fontWeight: '900' }}>{idiomData.swapword_incorrect}</Text></Text>)
 
         // set choices to swapword + swapword distractors
-        const distractors_random = dailyIdiom.swapword_distractors.sort(() => 0.5 - Math.random());
-        const choices = distractors_random.slice(0, 4).concat([dailyIdiom.swapword]);
+        const distractors_random = idiomData.swapword_distractors.sort(() => 0.5 - Math.random());
+        const choices = distractors_random.slice(0, 4).concat([idiomData.swapword]);
         setSwapWordChoices(choices);
     };
 
@@ -122,11 +124,12 @@ const wlgyoGame2 = () => {
 
     const handleWLGYO2Submit = () => {
         // if correct word, continue to screen 2
-        if (selectedWord == dailyIdiom.swapword) {
+        if (selectedWord == idiomData.swapword) {
             Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Success
             )
-            router.navigate('/wlgyoPostGame')
+            // router.navigate('/wlgyoPostGame')
+            router.navigate({ pathname: '/wlgyoPostGame', params: { 'idiom_string': idiom_string } });
         }
         // else vibrate and remove word from options
         Haptics.notificationAsync(
@@ -149,8 +152,8 @@ const wlgyoGame2 = () => {
                 <View style={styles.idiomContainer}>
                     <ThemedText style={[styles.word]}>
                         <PartiallyBoldedText
-                            text={dailyIdiom.idiom_modified}
-                            boldedWords={[dailyIdiom.swapword_incorrect]} />
+                            text={idiomData.idiom_modified}
+                            boldedWords={[idiomData.swapword_incorrect]} />
                     </ThemedText>
                 </View>
 

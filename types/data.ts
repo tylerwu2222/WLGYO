@@ -9,4 +9,5 @@ export type dailyIdiomType = {
     swapword_incorrect: string;
     swapword_pos: string;
     swapword_distractors: string[];
+    daily_date: Date;
 }

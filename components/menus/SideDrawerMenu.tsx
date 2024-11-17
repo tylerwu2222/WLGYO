@@ -22,7 +22,6 @@ const SideDrawerMenu = () => {
     const screenHeight = Dimensions.get('window').height;
 
     // track 
-    const [active, setActive] = useState('');
     const {
         sideMenuVisible,
         setSideMenuVisible,

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, useColorScheme, StatusBar } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { subDays, format } from 'date-fns';
 import CollectionGameSelector from '@/components/collection/CollectionGameSelector';
 import { useRouter } from 'expo-router';
@@ -12,13 +12,20 @@ import ThemedTitleText from '@/components/typography/ThemedTitleText';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import SubscribeModal from '@/components/modals/SubscribeModal';
 import RadioButtonGroup from '@/components/inputs/buttons/RadioButtonGroup';
+import { ThemeContext } from '@/providers/ThemeProvider';
+import { Searchbar } from 'react-native-paper';
 
 const collection = () => {
     // hooks
     const router = useRouter();
-    const colorScheme = useColorScheme();
-    const backgroundColor = Colors[colorScheme ?? 'light'].background;
-    
+    const {
+        textColor,
+        tintTextColor,
+        backgroundColor
+    } = useContext(ThemeContext);
+    const [collectionSearchQuery, setCollectionSearchQuery] = useState<string>('');
+    const [displayedPuzzles, setDisplayedPuzzles] = useState<string>('');
+
     // subscribe modal
     const subscribeModalRef = useRef<BottomSheetModal>(null);
     const isSubscribed = false;
@@ -27,13 +34,12 @@ const collection = () => {
     const viewOptions = ['all', 'completed', 'favorites']
     const [selectedViewOption, setSelectedViewOption] = useState<string>('all');
 
-    // get all archived games, from today to origin
+    // get all archived games, from today to original date
     const today = new Date();
     const allDays = Array.from({ length: 20 }, (_, i) =>
         format(subDays(today, i), 'MMM. dd, yyyy')
     );
     const daysData = allDays.map(d => { return ({ date: d }) });
-
 
     const handleShowSubscribeModal = () => {
         subscribeModalRef.current?.present();
@@ -49,12 +55,55 @@ const collection = () => {
         }
     };
 
+    // filter games when search query changes
+    useEffect(() => {
+        // setDisplayedPuzzles()
+    }, [collectionSearchQuery]);
+
+    const styles = StyleSheet.create({
+        collectionView: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: backgroundColor,
+            paddingHorizontal: 20
+        },
+        collectionSearchView: {
+            width: '100%'
+        },
+        searchBar: {
+            borderRadius: 10
+        },
+        flatListView: {
+            width: '100%'
+        },
+        collectionTitle: {
+            fontSize: 40
+        }
+    })
+
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={[styles.collectionView, { backgroundColor }]}>
+            <SafeAreaView style={styles.collectionView}>
                 <SubscribeModal ref={subscribeModalRef} />
                 {/* title */}
                 <ThemedTitleText style={styles.collectionTitle}>Collection</ThemedTitleText>
+                {/* search */}
+                <View style={styles.collectionSearchView}>
+                    <Searchbar
+                        placeholder='Search idioms'
+                        onChangeText={setCollectionSearchQuery}
+                        value={collectionSearchQuery}
+                        style={styles.searchBar}
+                        theme={{
+                            colors: {
+                                primary: tintTextColor,
+                                onSurface: tintTextColor,
+                                onSurfaceVariant: tintTextColor
+                            }
+                        }}
+                    />
+                </View>
                 {/* checkboxes */}
                 <View>
                     <RadioButtonGroup
@@ -81,18 +130,3 @@ const collection = () => {
 }
 
 export default collection;
-
-const styles = StyleSheet.create({
-    collectionView: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    flatListView: {
-        width: '90%'
-    },
-    collectionTitle: {
-        fontSize: 40
-    }
-})

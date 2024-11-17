@@ -22,7 +22,7 @@ import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 
 // functions
-import { fetchRandomIdiom } from "@/api/routes/idioms";
+import { getDailyIdiom, getRandomIdiom } from "@/api/routes/idioms";
 
 // view/header components
 import SafeViewAndroid from '@/components/views/SafeViewAndroid';
@@ -51,6 +51,9 @@ interface IdiomContextProps {
     dailyIdiom: dailyIdiomType;
     setDailyIdiom: Dispatch<SetStateAction<dailyIdiomType>>;
     fetchDailyIdiom: () => Promise<void>;
+    randomIdiom: dailyIdiomType;
+    setRandomIdiom: Dispatch<SetStateAction<dailyIdiomType>>;
+    fetchRandomIdiom: () => Promise<void>;
     sideMenuVisible: boolean;
     setSideMenuVisible: Dispatch<SetStateAction<boolean>>;
     isLoggedIn: boolean;
@@ -108,7 +111,7 @@ export default function RootLayout() {
 
     // update login status when session changes
     useEffect(() => {
-        console.log('session for is logged in',session);
+        // console.log('session for is logged in',session);
         if (session) {
             setIsLoggedIn(true);
         }
@@ -141,14 +144,37 @@ export default function RootLayout() {
         swapword: '',
         swapword_incorrect: '',
         swapword_pos: '',
-        swapword_distractors: []
+        swapword_distractors: [],
+        daily_date: new Date()
+    });
+    const [randomIdiom, setRandomIdiom] = useState<dailyIdiomType>({
+        idiom: '',
+        idiom_modified: '',
+        etymology: '',
+        definitions: [],
+        keywords: [],
+        keywords_pos: [],
+        swapword: '',
+        swapword_incorrect: '',
+        swapword_pos: '',
+        swapword_distractors: [],
+        daily_date: new Date()
     });
 
     const fetchDailyIdiom = async () => {
         // get random idiom for now to test variety of data
-        const res = await fetchRandomIdiom();
+        const res = await getDailyIdiom();
         setDailyIdiom(res);
         // console.log('fetched random idiom FE', res)
+    };
+
+    useEffect(() => {
+        fetchDailyIdiom();
+    }, []);
+
+    const fetchRandomIdiom = async () => {
+        const res = await getRandomIdiom();
+        setRandomIdiom(res);
     };
 
     // dont render if no fonts
@@ -164,6 +190,9 @@ export default function RootLayout() {
                     dailyIdiom,
                     setDailyIdiom,
                     fetchDailyIdiom,
+                    randomIdiom,
+                    setRandomIdiom,
+                    fetchRandomIdiom,
                     sideMenuVisible,
                     setSideMenuVisible,
                     isLoggedIn,

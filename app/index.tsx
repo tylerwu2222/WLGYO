@@ -36,8 +36,10 @@ export default function Index() {
 
   // idiom data
   const {
-    fetchDailyIdiom,
+    // fetchDailyIdiom,
+    fetchRandomIdiom,
     dailyIdiom,
+    randomIdiom,
     isLoggedIn,
     session,
     setSession,
@@ -61,11 +63,11 @@ export default function Index() {
   };
 
 
-  // fetch and set notes each time navigate to home
+  // fetch and set random idiom each time renavigate to home
   useEffect(() => {
     // console.log('route',route.name)
     if (route.name === 'index') {
-      fetchDailyIdiom();
+      fetchRandomIdiom();
     }
   }, [route]);
 
@@ -92,9 +94,21 @@ export default function Index() {
       <View style={styles.menu}>
         {/* play button */}
         {/* navigate to screen 2 if only one keyword */}
-        <Link href={dailyIdiom.keywords.length == 1 ? '/wlgyoGame2' : '/wlgyoGame1'} style={[styles.btn, styles.primaryBtn]} asChild>
+        <Link href={{
+          pathname: dailyIdiom.keywords.length == 1 ? '/wlgyoGame2' : '/wlgyoGame1',
+          params: {idiom_string: JSON.stringify(dailyIdiom)}
+
+        }} style={[styles.btn, styles.primaryBtn]} asChild>
           <TouchableOpacity>
             <Text style={[styles.btnText, styles.primaryBtnText]}>Daily idiom</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href={{
+          pathname: randomIdiom.keywords.length == 1 ? '/wlgyoGame2' : '/wlgyoGame1',
+          params: {idiom_string: JSON.stringify(randomIdiom)}
+          }} style={[styles.btn, styles.primaryBtn]} asChild>
+          <TouchableOpacity>
+            <Text style={[styles.btnText, styles.primaryBtnText]}>Free play</Text>
           </TouchableOpacity>
         </Link>
         {/* archive button */}

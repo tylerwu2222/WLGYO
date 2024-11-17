@@ -6,7 +6,7 @@ import React, { useContext } from 'react'
 import { IdiomContext } from './_layout';
 
 // navigation
-import { Link } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 // import { useIsFocused } from '@react-navigation/native';
 
 // views
@@ -28,23 +28,23 @@ import { ThemeContext } from '@/providers/ThemeProvider';
 
 const wlgyo_postgame = () => {
 
-  const {
-    dailyIdiom
-  } = useContext(IdiomContext);
-
+  // random or daily idiom
+  const { idiom_string } = useLocalSearchParams();
+  const idiomData = JSON.parse(idiom_string as string);
+  
   const screenWidth = Dimensions.get('window').width;
   const progress = useSharedValue(0);
   // create idiom meaning/etymology data for carousel
   let carouselData: carouselCard[] = [
     {
       header: 'Definition',
-      content: dailyIdiom.definitions.join('\n\n')
+      content: idiomData.definitions.join('\n\n')
     }
   ]
-  if (dailyIdiom.etymology) {
+  if (idiomData.etymology) {
     carouselData.push({
       header: 'Etymology',
-      content: dailyIdiom.etymology
+      content: idiomData.etymology
     })
   }
 
@@ -145,7 +145,7 @@ const wlgyo_postgame = () => {
           <ThemedTitleText style={styles.instruction}>That's right! The correct saying is:</ThemedTitleText>
 
           {/* correct idiom */}
-          <ThemedText style={styles.word}>"{dailyIdiom.idiom}"</ThemedText>
+          <ThemedText style={styles.word}>"{idiomData.idiom}"</ThemedText>
           {/* definition/etymology/example carousel */}
           <Carousel
             loop={false}

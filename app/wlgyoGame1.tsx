@@ -5,7 +5,7 @@ import { IdiomContext } from './_layout';
 
 import ThemedTitleText from '@/components/typography/ThemedTitleText';
 import { Colors, textColors, buttonColors } from '@/constants/Colors';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -82,15 +82,19 @@ const wlgyoGame1 = () => {
     const instructionText = <Text>Select the <Text style={{ fontWeight: '900' }}>bold</Text> word that is incorrect</Text>;
     const [selectedWord, setSelectedWord] = useState<string>('');
     const [swapWordChoices, setSwapWordChoices] = useState<string[]>([])
-    const {
-        dailyIdiom
-    } = useContext(IdiomContext);
+    // const {
+    //     idiomData
+    // } = useContext(IdiomContext);
 
-    // console.log('daily idiom in screen 1', dailyIdiom);
+    // console.log('daily idiom in screen 1', idiomData);
+
+    // daily or random idiom
+    const { idiom_string } = useLocalSearchParams();
+    const idiomData = JSON.parse(idiom_string as string);
 
     // STAGE 1 data
     useEffect(() => {
-        const choices = dailyIdiom.keywords.filter(w => w !== dailyIdiom.swapword).concat([dailyIdiom.swapword_incorrect])
+        const choices = idiomData.keywords.filter((w: string) => w !== idiomData.swapword).concat([idiomData.swapword_incorrect])
         setSwapWordChoices(choices);
     }, []);
 
@@ -101,12 +105,12 @@ const wlgyoGame1 = () => {
 
     const handleWLGYO1Submit = () => {
         // if correct word, continue to screen 2 with params
-        if (selectedWord == dailyIdiom.swapword_incorrect) {
+        if (selectedWord == idiomData.swapword_incorrect) {
             Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Success
             )
-            setSwapWordChoices([dailyIdiom.swapword_incorrect]); // only bold correct swap word
-            router.navigate('/wlgyoGame2');
+            setSwapWordChoices([idiomData.swapword_incorrect]); // only bold correct swap word
+            router.navigate({ pathname: '/wlgyoGame2', params: { 'idiom_string': idiom_string } });
         }
         // else vibrate and remove word from options
         console.log(selectedWord, 'incorrect, vibrate?')
@@ -125,7 +129,7 @@ const wlgyoGame1 = () => {
                 {/* selectable text */}
                 <Text style={styles.text}>
                     <SelectableIdiomText
-                        idiom={dailyIdiom.idiom_modified}
+                        idiom={idiomData.idiom_modified}
                         keywords={swapWordChoices}
                         selectedWord={selectedWord}
                         setSelectedWord={setSelectedWord}
