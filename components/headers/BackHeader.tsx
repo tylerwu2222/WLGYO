@@ -5,8 +5,9 @@ import { useContext } from 'react'
 // components
 import SettingsIcon from '../navigation/SettingsIcon'
 import { ThemeContext } from '@/providers/ThemeProvider';
+import BackIcon from '../navigation/BackIcon';
 
-const MenuHeader = () => {
+const BackHeader = () => {
 
     const { backgroundColor } = useContext(ThemeContext);
 
@@ -21,9 +22,9 @@ const MenuHeader = () => {
 
     return (
         <View style={styles.header}>
-            <SettingsIcon />
+            <BackIcon />
         </View>
     )
 }
 
-export default MenuHeader
+export default BackHeader

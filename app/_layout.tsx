@@ -40,6 +40,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // remove later
 import { LogBox } from 'react-native';
+import BackHeader from '@/components/headers/BackHeader';
 
 LogBox.ignoreAllLogs();
 
@@ -225,7 +226,7 @@ export default function RootLayout() {
                                         options={{
                                             title: "Login",
                                             presentation: 'modal',
-                                            headerShown: false
+                                            header: () => <BackHeader />
                                         }} />
                                     <Stack.Screen
                                         name="resetPassword"
@@ -262,7 +263,7 @@ export default function RootLayout() {
                                         name="subscribe"
                                         options={{
                                             title: "Subscribe",
-                                            headerShown: false
+                                            header: () => <BackHeader />
                                         }} />
                                     {/* <Stack.Screen name="settings" options={{ title: "Collection",headerShown: false }} /> */}
                                 </Stack>

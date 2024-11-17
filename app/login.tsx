@@ -123,6 +123,9 @@ const login = () => {
         <Link href='/resetPassword'>
           <LinkText>Forgot password?</LinkText>
         </Link>
+        <Link href='/subscribe'>
+          <LinkText style={{ color: 'white' }}>Don't have an account? Sign up</LinkText>
+        </Link>
       </View>
     </View>
   )
